@@ -1,4 +1,4 @@
-## React Devices
+## React Device Frame
 React wrapper for device frame.
 
 **Supported devices**
@@ -33,7 +33,7 @@ $ npm i react-device --save
 
 ```javascript
 import React, {Component} from "react";
-import Device from "react-devices";
+import Device from "react-device-frame";
 
 class myDevice extends Component {
 
