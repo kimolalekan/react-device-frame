@@ -1,7 +1,7 @@
 ## React Devices
 React wrapper for device frame.
 
-** Supported devices **
+**Supported devices**
 
 iPhone X (Silver)
 
@@ -24,7 +24,7 @@ iMac Pro
 Apple Watch
 
 
-** Installations **
+**Installations**
 ```bash
 $ npm i react-device --save
 ```
@@ -32,5 +32,29 @@ $ npm i react-device --save
 ** Usage **
 
 ```javascript
+import React, {Component} from "react";
 import Device from "react-devices";
+
+class myDevice extends Component {
+
+  render (){
+    return (
+      <Device device="iphone-8" color="gold" url="https://www.google.com" />
+    )
+  }
+}
+
+export default myDevice;
 ```
+
+**Properties**
+
+| Property  | Value   |  Type |  
+|---|---|---|
+|  device |  iphone-x, iphone-8, google-pixel, galaxy-s8, ipad-pro, surface-pro |  string |
+| color  |silver, spacegray, black, gold, rosegold, blue   |  string |
+|  url |e.g https://www.google.com   |  string | |
+
+**LICENSE: MIT**
+
+**Developer:** Olalekan Animashaun
