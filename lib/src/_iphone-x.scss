@@ -1,0 +1,141 @@
+// iPhone X
+$device-silver: #e2e3e4;
+$device-silver-dark: darken($device-silver, 50%);
+$device-silver-panel: #222;
+
+.device-iphone-x {
+  height: 694px;
+  width: 342px;
+
+  .device-frame {
+    background: $device-silver-panel;
+    border-radius: 54px;
+    box-shadow: inset 0 0 0 2px $device-silver-dark, inset 0 0 0 6px $device-silver;
+    height: 694px;
+    padding: 22px;
+    width: 342px;
+  }
+
+  // 2436-by-1125-pixel resolution
+  .device-content {
+    background-color: #fff;
+    background-image: url("../src/img/bg-00.jpg");
+    background-position: center center;
+    background-size: cover;
+    border-radius: 32px;
+    height: 650px;
+    position: relative;
+    width: 300px;
+  }
+
+  .device-stripe {
+    &::after,
+    &::before {
+      border: solid rgba(#333, .25);
+      border-width: 0 6px;
+      content: "";
+      height: 5px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      z-index: 9;
+    }
+    &::after {
+      top: 68px;
+    }
+    &::before {
+      bottom: 68px;
+    }
+  }
+
+  .device-header {
+    background: $device-silver-panel;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    height: 24px;
+    left: 50%;
+    margin-left: -82px;
+    position: absolute;
+    top: 22px;
+    width: 164px;
+    z-index: 199;
+
+    &::after,
+    &::before {
+      content: "";
+      height: 6px;
+      position: absolute;
+      top: 0;
+      width: 6px;
+    }
+    &::after {
+      background: radial-gradient(circle at bottom left, transparent 0, transparent 75%, $device-silver-panel 75%, $device-silver-panel 100%);
+      left: -6px;
+    }
+    &::before {
+      background: radial-gradient(circle at bottom right, transparent 0, transparent 75%, $device-silver-panel 75%, $device-silver-panel 100%);
+      right: -6px;
+    }
+  }
+
+  .device-sensors {
+    &::after,
+    &::before {
+      content: "";
+      position: absolute;
+    }
+    &::after {
+      background: #444;
+      border-radius: 2.5px;
+      height: 5px;
+      left: 50%;
+      margin-left: -20px;
+      top: 4px;
+      width: 40px;
+    }
+    &::before {
+      background: #444;
+      border-radius: 50%;
+      height: 11px;
+      left: 50%;
+      margin-left: 30px;
+      top: 1px;
+      width: 11px;
+    }
+  }
+
+  .device-btns {
+    background: $device-silver-dark;
+    height: 26px;
+    left: -2px;
+    position: absolute;
+    top: 92px;
+    width: 3px;
+
+    &::after,
+    &::before {
+      background: $device-silver-dark;
+      content: "";
+      height: 50px;
+      left: 0;
+      position: absolute;
+      width: 3px;
+    }
+
+    &::after {
+      top: 48px;
+    }
+    &::before {
+      top: 112px;
+    }
+  }
+
+  .device-power {
+    background: $device-silver-dark;
+    height: 80px;
+    right: -2px;
+    position: absolute;
+    top: 160px;
+    width: 3px;
+  }
+}

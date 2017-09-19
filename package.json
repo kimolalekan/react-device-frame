@@ -1,0 +1,39 @@
+{
+  "name": "react-deviceframe",
+  "version": "1.0.0",
+  "description": "Preview website on a device frame",
+  "main": "index.js",
+  "scripts": {
+  "build": "babel lib -d build",
+  "lint": "eslint lib/**; exit 0",
+  "lint:watch": "esw -w lib/**",
+  "prepublish": "npm run build"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kimolalekan/react-deviceframe.git"
+  },
+  "author": "Olalekan Animashaun <kim.olalekan@gmail.com> (https://kimolalekan.github.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kimolalekan/react-deviceframe/issues"
+  },
+  "homepage": "https://github.com/kimolalekan/react-deviceframe#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "^4.5.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.3.0",
+    "eslint-watch": "^3.1.2",
+    "polished": "^1.6.2",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "styled-components": "^2.1.2"
+  }
+}

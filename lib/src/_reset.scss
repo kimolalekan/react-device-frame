@@ -1,0 +1,14 @@
+// Reset
+.device,
+.device * {
+  &,
+  &::before,
+  &::after {
+    box-sizing: border-box;
+    display: block;
+  }
+}
+
+.device {
+  position: relative;
+}
