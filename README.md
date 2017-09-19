@@ -29,7 +29,7 @@ Apple Watch
 $ npm i react-device --save
 ```
 
-** Usage **
+**Usage**
 
 ```javascript
 import React, {Component} from "react";
