@@ -39,7 +39,7 @@ class myDevice extends Component {
 
   render (){
     return (
-      <Device device="iphone-8" color="gold" url="https://www.google.com" />
+      <Device name="iphone-8" color="gold" url="https://www.google.com" />
     )
   }
 }
@@ -51,7 +51,7 @@ export default myDevice;
 
 | Property  | Value   |  Type |  
 |---|---|---|
-|  device |  iphone-x, iphone-8, google-pixel, galaxy-s8, ipad-pro, surface-pro |  string |
+|  name |  iphone-x, iphone-8, google-pixel, galaxy-s8, ipad-pro, surface-pro |  string |
 | color  |silver, spacegray, black, gold, rosegold, blue   |  string |
 |  url |e.g https://www.google.com   |  string | |
 
