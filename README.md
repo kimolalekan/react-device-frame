@@ -26,7 +26,7 @@ Apple Watch
 
 **Installations**
 ```bash
-$ npm i react-device --save
+$ npm i react-device-frame --save
 ```
 
 **Usage**
