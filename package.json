@@ -1,6 +1,6 @@
 {
   "name": "react-device-frame",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Preview website on a device frame",
   "main": "react-device-frame.js",
   "scripts": {
