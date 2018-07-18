@@ -1,30 +1,36 @@
 ## React Device Frame
-React wrapper for device frame.
+React wrapper for device frame based on [Marvel's Devices.css](http://marvelapp.github.io/devices.css/ "Devices.css" target="_blank").
 
 **Supported devices**
 
 iPhone X (Silver)
 
-iPhone 8 (Silver, Gold and Space Gray)
+iPhone 8 (Silver, Gold and Black)
 
-Google Pixel (Very Silver, Quite Black and Really Blue)
+iPhone 8 Plus (Silver, Gold and Black)
 
-Samsung Galaxy S8 ( Midnight Black and Coral Blue)
+iPhone 5S (Silver, Gold and Black)
 
-iPad Pro (Silver, Gold, Rose Gold and Space Gray)
+iPhone 5C (White, Red, Yellow, Green and Blue)
 
-MacBook (Silver, Gold, Rose Gold and Space Gray)
+iPhone 4S (Silver, Gold and Black)
 
-MacBook Pro (Silver and Space Gray)
+iPad (White and Black)
 
-Surface Studio
+MacBook Pro
 
-iMac Pro
+Samsung Galaxy S5
 
-Apple Watch
+Samsung Galaxy Note 8
+
+HTC one
+
+Nexus 5
+
+Lumia 920 (White, Red, Yellow, Black and Blue)
 
 
-**Installations**
+**Installation**
 ```bash
 $ npm i react-device-frame --save
 ```
@@ -51,8 +57,8 @@ export default myDevice;
 
 | Property  | Value   |  Type |  
 |---|---|---|
-|  name |  iphone-x, iphone-8, google-pixel, galaxy-s8, ipad-pro, surface-pro, imac-pro, apple-watch |  string |
-| color  |silver, spacegray, black, gold, rosegold, blue   |  string |
+|  name |  iphone-x, iphone-8, iphone-8plus, iphone-5s, iphone-5c, iphone-4s, ipad-mini, nexus-5, htc-one, galaxy-s5, galaxy-note8, macbook-pro |  string |
+| color  | white, red, yellow, black, blue, gold, silver   |  string |
 |  url |e.g https://www.google.com   |  string | |
 
 **LICENSE: MIT**
