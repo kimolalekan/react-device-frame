@@ -14,7 +14,57 @@ var _propTypes = require("prop-types");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-require("./lib/css/devices.min.css");
+var _iphonex = require("./build/iphonex");
+
+var _iphonex2 = _interopRequireDefault(_iphonex);
+
+var _iphone = require("./build/iphone8");
+
+var _iphone2 = _interopRequireDefault(_iphone);
+
+var _iphone8plus = require("./build/iphone8plus");
+
+var _iphone8plus2 = _interopRequireDefault(_iphone8plus);
+
+var _iphone5s = require("./build/iphone5s");
+
+var _iphone5s2 = _interopRequireDefault(_iphone5s);
+
+var _iphone5c = require("./build/iphone5c");
+
+var _iphone5c2 = _interopRequireDefault(_iphone5c);
+
+var _iphone4s = require("./build/iphone4s");
+
+var _iphone4s2 = _interopRequireDefault(_iphone4s);
+
+var _ipad = require("./build/ipad");
+
+var _ipad2 = _interopRequireDefault(_ipad);
+
+var _macbookpro = require("./build/macbookpro");
+
+var _macbookpro2 = _interopRequireDefault(_macbookpro);
+
+var _nexus = require("./build/nexus5");
+
+var _nexus2 = _interopRequireDefault(_nexus);
+
+var _galaxys = require("./build/galaxys5");
+
+var _galaxys2 = _interopRequireDefault(_galaxys);
+
+var _galaxynote = require("./build/galaxynote8");
+
+var _galaxynote2 = _interopRequireDefault(_galaxynote);
+
+var _htcone = require("./build/htcone");
+
+var _htcone2 = _interopRequireDefault(_htcone);
+
+var _lumia = require("./build/lumia920");
+
+var _lumia2 = _interopRequireDefault(_lumia);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,29 +87,77 @@ var Device = function (_Component) {
     key: "render",
     value: function render() {
 
-      var classes = "device-" + this.props.name + " device-" + this.props.color;
+      var device = void 0;
+      var iphonex = _react2.default.createElement("iphonex", { url: this.props.url, color: this.props.color });
+      var iphone8 = _react2.default.createElement("iphone8", { url: this.props.url, color: this.props.color });
+      var iphone8plus = _react2.default.createElement("iphone8plus", { url: this.props.url, color: this.props.color });
+      var iphone5s = _react2.default.createElement("iphone5s", { url: this.props.url, color: this.props.color });
+      var iphone5c = _react2.default.createElement("iphone5c", { url: this.props.url, color: this.props.color });
+      var iphone4s = _react2.default.createElement("iphone4s", { url: this.props.url, color: this.props.color });
+      var ipad = _react2.default.createElement("ipad", { url: this.props.url, color: this.props.color });
+      var macbookpro = _react2.default.createElement("macbookpro", { url: this.props.url, color: this.props.color });
+      var nexus5 = _react2.default.createElement("nexus5", { url: this.props.url, color: this.props.color });
+      var galaxys5 = _react2.default.createElement("galaxys5", { url: this.props.url, color: this.props.color });
+      var galaxynote8 = _react2.default.createElement("galaxynote8", { url: this.props.url, color: this.props.color });
 
-      return _react2.default.createElement(
-        "div",
-        { className: classes },
-        _react2.default.createElement(
-          "div",
-          { className: "device-frame" },
-          _react2.default.createElement(
-            "div",
-            { className: "device-content" },
-            _react2.default.createElement("iframe", { className: "device-src", src: this.props.url })
-          )
-        ),
-        _react2.default.createElement("div", { className: "device-stripe" }),
-        _react2.default.createElement(
-          "div",
-          { className: "device-header" },
-          _react2.default.createElement("div", { className: "device-sensors" })
-        ),
-        _react2.default.createElement("div", { className: "device-btns" }),
-        _react2.default.createElement("div", { className: "device-power" })
-      );
+      switch (device) {
+        case "iphone-x":
+          device = iphonex;
+          break;
+
+        case "iphone-8":
+          device = iphone8;
+          break;
+
+        case "iphone-8plus":
+          device = iphone8plus;
+          break;
+
+        case "iphone-5s":
+          device = iphone5s;
+          break;
+
+        case "iphone-5c":
+          device = iphone5c;
+          break;
+
+        case "iphone-4s":
+          device = iphone4s;
+          break;
+
+        case "ipad-mini":
+          device = ipad;
+          break;
+
+        case "macbook-pro":
+          device = macbookpro;
+          break;
+
+        case "nexus-5":
+          device = nexus5;
+          break;
+
+        case "galaxy-s5":
+          device = galaxys5;
+          break;
+
+        case "galaxy-note8":
+          device = galaxynote8;
+          break;
+
+        case "htc-one":
+          device = _htcone2.default;
+          break;
+
+        case "lumia-920":
+          device = _lumia2.default;
+          break;
+
+        default:
+          device = iphone8;
+      }
+
+      return device;
     }
   }]);
 
@@ -67,7 +165,7 @@ var Device = function (_Component) {
 }(_react.Component);
 
 Device.propTypes = {
-  name: _propTypes2.default.string,
+  name: _propTypes2.default.string.isRequired,
   color: _propTypes2.default.string,
   url: _propTypes2.default.string
 };

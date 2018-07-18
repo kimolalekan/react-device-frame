@@ -1,13 +1,13 @@
 {
   "name": "react-device-frame",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Preview website on a device frame",
   "main": "react-device-frame.js",
   "scripts": {
     "build": "babel src -d build",
     "lint": "eslint src/**; exit 0",
     "lint:watch": "esw -w src/**",
-    "publish": "npm run build"
+    "publish": ""
   },
   "repository": {
     "type": "git",
