@@ -88,17 +88,50 @@ var Device = function (_Component) {
     value: function render() {
 
       var device = void 0;
-      var iphonex = _react2.default.createElement("iphonex", { url: this.props.url, color: this.props.color });
-      var iphone8 = _react2.default.createElement("iphone8", { url: this.props.url, color: this.props.color });
-      var iphone8plus = _react2.default.createElement("iphone8plus", { url: this.props.url, color: this.props.color });
-      var iphone5s = _react2.default.createElement("iphone5s", { url: this.props.url, color: this.props.color });
-      var iphone5c = _react2.default.createElement("iphone5c", { url: this.props.url, color: this.props.color });
-      var iphone4s = _react2.default.createElement("iphone4s", { url: this.props.url, color: this.props.color });
-      var ipad = _react2.default.createElement("ipad", { url: this.props.url, color: this.props.color });
-      var macbookpro = _react2.default.createElement("macbookpro", { url: this.props.url, color: this.props.color });
-      var nexus5 = _react2.default.createElement("nexus5", { url: this.props.url, color: this.props.color });
-      var galaxys5 = _react2.default.createElement("galaxys5", { url: this.props.url, color: this.props.color });
-      var galaxynote8 = _react2.default.createElement("galaxynote8", { url: this.props.url, color: this.props.color });
+      var iphonex = _react2.default.createElement("iphonex", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var iphone8 = _react2.default.createElement("iphone8", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var iphone8plus = _react2.default.createElement("iphone8plus", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var iphone5s = _react2.default.createElement("iphone5s", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var iphone5c = _react2.default.createElement("iphone5c", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var iphone4s = _react2.default.createElement("iphone4s", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var ipad = _react2.default.createElement("ipad", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var macbookpro = _react2.default.createElement("macbookpro", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var nexus5 = _react2.default.createElement("nexus5", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var galaxys5 = _react2.default.createElement("galaxys5", {
+        color: this.props.color,
+        url: this.props.url
+      });
+      var galaxynote8 = _react2.default.createElement("galaxynote8", {
+        color: this.props.color,
+        url: this.props.url
+      });
 
       switch (device) {
         case "iphone-x":

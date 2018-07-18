@@ -6,18 +6,18 @@ import "./devices.css";
 
 export default class macbookpro extends Component {
   render() {
-   let color;
+    let color;
     this.props.color ? (color = this.props.color) : (color = "black");
 
     return (
-<div className="marvel-device macbook">
-    <div className="top-bar"></div>
-    <div className="camera"></div>
-    <div className="screen">
-        <iframe src={this.props.url} />
-    </div>
-    <div className="bottom-bar"></div>
-</div>
+      <div className="marvel-device macbook">
+        <div className="top-bar" />
+        <div className="camera" />
+        <div className="screen">
+          <iframe src={this.props.url} />
+        </div>
+        <div className="bottom-bar" />
+      </div>
     );
   }
 }

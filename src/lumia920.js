@@ -6,18 +6,18 @@ import "./devices.css";
 
 export default class lumia920 extends Component {
   render() {
-   let color;
+    let color;
     this.props.color ? (color = this.props.color) : (color = "yellow");
 
     return (
       <div className={`marvel-device lumia920 ${color}`}>
-          <div className="top-bar"></div>
-          <div className="volume"></div>
-          <div className="camera"></div>
-          <div className="speaker"></div>
-          <div className="screen">
-              <iframe src={this.props.url} />
-          </div>
+        <div className="top-bar" />
+        <div className="volume" />
+        <div className="camera" />
+        <div className="speaker" />
+        <div className="screen">
+          <iframe src={this.props.url} />
+        </div>
       </div>
     );
   }

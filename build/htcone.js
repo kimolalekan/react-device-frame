@@ -49,7 +49,7 @@ var htcone = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.prop.url })
+          _react2.default.createElement("iframe", { src: this.props.url })
         )
       );
     }
