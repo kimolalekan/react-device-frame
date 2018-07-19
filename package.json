@@ -1,6 +1,6 @@
 {
   "name": "react-device-frame",
-  "version": "2.0.2",
+  "version": "2.0.6",
   "description": "Preview website on a device frame",
   "main": "react-device-frame.js",
   "scripts": {
@@ -30,8 +30,8 @@
     "eslint-plugin-react": "^7.3.0",
     "eslint-watch": "^3.1.2",
     "polished": "^1.7.0",
+    "prop-types": "^15.6.2",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "prop-types": "^15.6.2"
+    "react-dom": "^16.0.0"
   }
 }
