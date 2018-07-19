@@ -41,7 +41,7 @@ var Iphone5c = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device iphone8 " + color },
+        { className: "marvel-device iphone5c " + color },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "sleep" }),
         _react2.default.createElement("div", { className: "volume" }),

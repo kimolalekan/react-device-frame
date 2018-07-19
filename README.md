@@ -1,6 +1,8 @@
 ## React Device Frame
 
-React wrapper for device frame based on [Marvel's Devices.css](http://marvelapp.github.io/devices.css/).
+React wrapper for device frame based on [Devices.css](http://marvelapp.github.io/devices.css/).
+
+Devices preview: [Demo](https://kimolalekan.github.io/)
 
 **Supported devices**
 
