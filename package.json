@@ -1,6 +1,6 @@
 {
   "name": "react-device-frame",
-  "version": "2.0.7",
+  "version": "2.1.0",
   "description": "Preview website on a device frame",
   "main": "react-device-frame.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "lint": "eslint src/** --fix ; exit 0",
     "lint:watch": "esw -w src/**"
   },
+  "keywords": "react, device, frame, browser, preview, component",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kimolalekan/react-device-frame.git"
