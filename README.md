@@ -2,7 +2,7 @@
 
 React wrapper for device frame based on [Devices.css](http://marvelapp.github.io/devices.css/).
 
-Devices preview: [Demo](https://kimolalekan.github.io/)
+Devices preview: [Demo](http://device.kraftkin.com/)
 
 **Supported devices**
 
