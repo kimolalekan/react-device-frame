@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var nexus5 = function (_Component) {
-  _inherits(nexus5, _Component);
+var Nexus5 = function (_Component) {
+  _inherits(Nexus5, _Component);
 
-  function nexus5() {
-    _classCallCheck(this, nexus5);
+  function Nexus5() {
+    _classCallCheck(this, Nexus5);
 
-    return _possibleConstructorReturn(this, (nexus5.__proto__ || Object.getPrototypeOf(nexus5)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Nexus5.__proto__ || Object.getPrototypeOf(Nexus5)).apply(this, arguments));
   }
 
-  _createClass(nexus5, [{
+  _createClass(Nexus5, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -49,19 +49,19 @@ var nexus5 = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         )
       );
     }
   }]);
 
-  return nexus5;
+  return Nexus5;
 }(_react.Component);
 
-exports.default = nexus5;
+exports.default = Nexus5;
 
 
-nexus5.propTypes = {
+Nexus5.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

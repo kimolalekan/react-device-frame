@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var galaxynote8 = function (_Component) {
-  _inherits(galaxynote8, _Component);
+var Galaxynote8 = function (_Component) {
+  _inherits(Galaxynote8, _Component);
 
-  function galaxynote8() {
-    _classCallCheck(this, galaxynote8);
+  function Galaxynote8() {
+    _classCallCheck(this, Galaxynote8);
 
-    return _possibleConstructorReturn(this, (galaxynote8.__proto__ || Object.getPrototypeOf(galaxynote8)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Galaxynote8.__proto__ || Object.getPrototypeOf(Galaxynote8)).apply(this, arguments));
   }
 
-  _createClass(galaxynote8, [{
+  _createClass(Galaxynote8, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -57,19 +57,19 @@ var galaxynote8 = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         )
       );
     }
   }]);
 
-  return galaxynote8;
+  return Galaxynote8;
 }(_react.Component);
 
-exports.default = galaxynote8;
+exports.default = Galaxynote8;
 
 
-galaxynote8.propTypes = {
+Galaxynote8.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

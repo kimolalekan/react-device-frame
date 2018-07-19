@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
 
-export default class iphonex extends Component {
+export default class Iphonex extends Component {
   render() {
     let color;
     this.props.color ? (color = this.props.color) : (color = "gold");
@@ -27,7 +27,7 @@ export default class iphonex extends Component {
         </div>
         <div className="inner-shadow" />
         <div className="screen">
-          <iframe src={this.props.url} />
+          <iframe src={this.props.site} />
         </div>
       </div>
     );
@@ -35,7 +35,7 @@ export default class iphonex extends Component {
 }
 
 
-iphonex.propTypes = {
+Iphonex.propTypes = {
   color: PropTypes.string,
-  url: PropTypes.string
+  site: PropTypes.string
 };

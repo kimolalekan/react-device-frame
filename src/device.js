@@ -1,135 +1,108 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import  iphonex from "./iphonex";
-import  iphone8 from "./iphone8";
-import  iphone8plus from "./iphone8plus";
-import  iphone5s from "./iphone5s";
-import  iphone5c from "./iphone5c";
-import  iphone4s from "./iphone4s";
-import  ipad from "./ipad";
-import  macbookpro from "./macbookpro";
-import  nexus5 from "./nexus5";
-import  galaxys5 from "./galaxys5";
-import  galaxynote8 from "./galaxynote8";
-import  htcone from "./htcone";
-import  lumia920 from "./lumia920";
+import  Iphonex from "./iphonex";
+import  Iphone8 from "./iphone8";
+import  Iphone8plus from "./iphone8plus";
+import  Iphone5s from "./iphone5s";
+import  Iphone5c from "./iphone5c";
+import  Iphone4s from "./iphone4s";
+import  Ipad from "./ipad";
+import  Macbookpro from "./macbookpro";
+import  Nexus5 from "./nexus5";
+import  Galaxys5 from "./galaxys5";
+import  Galaxynote8 from "./galaxynote8";
+import  Htcone from "./htcone";
+import  Lumia920 from "./lumia920";
 
-class Device extends Component {
+export default class Device extends Component {
+
+  getDevice(type)
+  {
+    let device ;
+    const iphonex = (<Iphonex
+      color={this.props.color}
+      site={this.props.url}
+    />);
+    const iphone8 = (<Iphone8
+      color={this.props.color}
+      site={this.props.url}
+    />);
+    const iphone8plus = (<Iphone8plus
+      color={this.props.color}
+      site={this.props.url}
+                         />);
+    const iphone5s = (<Iphone5s
+      color={this.props.color}
+      site={this.props.url}
+                      />);
+    const iphone5c = (<Iphone5c
+      color={this.props.color}
+      site={this.props.url}
+                      />);
+    const iphone4s = (<Iphone4s
+      color={this.props.color}
+      site={this.props.url}
+                      />);
+    const ipad = (<Ipad
+      color={this.props.color}
+      site={this.props.url}
+                  />);
+    const macbookpro = (<Macbookpro
+      color={this.props.color}
+      site={this.props.url}
+                        />);
+    const nexus5 = (<Nexus5
+      color={this.props.color}
+      site={this.props.url}
+                    />);
+    const galaxys5 = (<Galaxys5
+      color={this.props.color}
+      site={this.props.url}
+                      />);
+    const galaxynote8 = (<Galaxynote8
+      color={this.props.color}
+      site={this.props.url}
+                         />);
+
+    if (type === "iphone-x")
+    {
+      return iphonex;
+    } else if (type === "iphone-8") {
+      return iphone8;
+    } else if (type === "iphone-8plus")
+    {
+      return iphone8plus;
+    } else if (type === "iphone-5s"){
+      return iphone5s;
+    } else if (type === "iphone-5c"){
+      return iphone5c;
+    } else if (type === "iphone-4s"){
+      return iphone4s;
+    } else if (type === "ipad-mini"){
+      return ipad;
+    } else if (type === "macbook-pro"){
+      return macbookpro;
+    } else if (type === "htc-one"){
+      return htcone;
+    } else if (type === "nexus-5"){
+      return nexus5;
+    } else if (type === "galaxy-s5"){
+      return galaxys5;
+    } else if (type === "galaxy-note8"){
+      return galaxynote8;
+    }
+  }
 
   render() {
 
-    let device;
-    const iphonex = (<iphonex
-      color={this.props.color}
-      url={this.props.url}
-    />);
-    const iphone8 = (<iphone8
-      color={this.props.color}
-      url={this.props.url}
-                     />);
-    const iphone8plus = (<iphone8plus
-      color={this.props.color}
-      url={this.props.url}
-                         />);
-    const iphone5s = (<iphone5s
-      color={this.props.color}
-      url={this.props.url}
-                      />);
-    const iphone5c = (<iphone5c
-      color={this.props.color}
-      url={this.props.url}
-                      />);
-    const iphone4s = (<iphone4s
-      color={this.props.color}
-      url={this.props.url}
-                      />);
-    const ipad = (<ipad
-      color={this.props.color}
-      url={this.props.url}
-                  />);
-    const macbookpro = (<macbookpro
-      color={this.props.color}
-      url={this.props.url}
-                        />);
-    const nexus5 = (<nexus5
-      color={this.props.color}
-      url={this.props.url}
-                    />);
-    const galaxys5 = (<galaxys5
-      color={this.props.color}
-      url={this.props.url}
-                      />);
-    const galaxynote8 = (<galaxynote8
-      color={this.props.color}
-      url={this.props.url}
-                         />);
-
-    switch (device) {
-      case "iphone-x":
-        device = iphonex;
-        break;
-
-      case "iphone-8":
-        device = iphone8;
-        break;
-
-      case "iphone-8plus":
-        device = iphone8plus;
-        break;
-
-      case "iphone-5s":
-        device = iphone5s;
-        break;
-
-      case "iphone-5c":
-        device = iphone5c;
-        break;
-
-      case "iphone-4s":
-        device = iphone4s;
-        break;
-
-      case "ipad-mini":
-        device = ipad;
-        break;
-
-      case "macbook-pro":
-        device = macbookpro;
-        break;
-
-      case "nexus-5":
-        device = nexus5;
-        break;
-
-      case "galaxy-s5":
-        device = galaxys5;
-        break;
-
-      case "galaxy-note8":
-        device = galaxynote8;
-        break;
-
-      case "htc-one":
-        device = htcone;
-        break;
-
-      case "lumia-920":
-        device = lumia920;
-        break;
-
-      default:
-        device = iphone8;
-    }
+    const device = this.getDevice(this.props.name);
 
     return device;
   }
 }
-
 
 Device.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
   url: PropTypes.string
 };
-
-export default Device;

@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var lumia920 = function (_Component) {
-  _inherits(lumia920, _Component);
+var Lumia920 = function (_Component) {
+  _inherits(Lumia920, _Component);
 
-  function lumia920() {
-    _classCallCheck(this, lumia920);
+  function Lumia920() {
+    _classCallCheck(this, Lumia920);
 
-    return _possibleConstructorReturn(this, (lumia920.__proto__ || Object.getPrototypeOf(lumia920)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Lumia920.__proto__ || Object.getPrototypeOf(Lumia920)).apply(this, arguments));
   }
 
-  _createClass(lumia920, [{
+  _createClass(Lumia920, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -49,19 +49,19 @@ var lumia920 = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         )
       );
     }
   }]);
 
-  return lumia920;
+  return Lumia920;
 }(_react.Component);
 
-exports.default = lumia920;
+exports.default = Lumia920;
 
 
-lumia920.propTypes = {
+Lumia920.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

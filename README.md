@@ -1,5 +1,6 @@
 ## React Device Frame
-React wrapper for device frame based on [Marvel's Devices.css](http://marvelapp.github.io/devices.css/ "Devices.css" target="_blank").
+
+React wrapper for device frame based on [Marvel's Devices.css](http://marvelapp.github.io/devices.css/).
 
 **Supported devices**
 
@@ -29,8 +30,8 @@ Nexus 5
 
 Lumia 920 (White, Red, Yellow, Black and Blue)
 
-
 **Installation**
+
 ```bash
 $ npm i react-device-frame --save
 ```
@@ -38,15 +39,12 @@ $ npm i react-device-frame --save
 **Usage**
 
 ```javascript
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Device from "react-device-frame";
 
 class myDevice extends Component {
-
-  render (){
-    return (
-      <Device name="iphone-8" color="gold" url="https://www.google.com" />
-    )
+  render() {
+    return <Device name="iphone-8" color="gold" url="https://www.google.com" />;
   }
 }
 
@@ -55,11 +53,11 @@ export default myDevice;
 
 **Properties**
 
-| Property  | Value   |  Type |  
-|---|---|---|
-|  name |  iphone-x, iphone-8, iphone-8plus, iphone-5s, iphone-5c, iphone-4s, ipad-mini, nexus-5, htc-one, galaxy-s5, galaxy-note8, macbook-pro |  string |
-| color  | white, red, yellow, black, blue, gold, silver   |  string |
-|  url |e.g https://www.google.com   |  string | |
+| Property | Value                                                                                                                                | Type   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| name     | iphone-x, iphone-8, iphone-8plus, iphone-5s, iphone-5c, iphone-4s, ipad-mini, nexus-5, htc-one, galaxy-s5, galaxy-note8, macbook-pro | string |
+| color    | white, red, yellow, black, blue, gold, silver                                                                                        | string |
+| url      | e.g https://www.google.com                                                                                                           | string |  |
 
 **LICENSE: MIT**
 

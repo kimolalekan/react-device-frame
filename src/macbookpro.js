@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
 
-export default class macbookpro extends Component {
+export default class Macbookpro extends Component {
   render() {
     let color;
     this.props.color ? (color = this.props.color) : (color = "black");
@@ -14,7 +14,7 @@ export default class macbookpro extends Component {
         <div className="top-bar" />
         <div className="camera" />
         <div className="screen">
-          <iframe src={this.props.url} />
+          <iframe src={this.props.site} />
         </div>
         <div className="bottom-bar" />
       </div>
@@ -23,7 +23,7 @@ export default class macbookpro extends Component {
 }
 
 
-macbookpro.propTypes = {
+Macbookpro.propTypes = {
   color: PropTypes.string,
-  url: PropTypes.string
+  site: PropTypes.string
 };

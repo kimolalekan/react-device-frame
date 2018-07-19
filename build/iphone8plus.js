@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var iphone8plus = function (_Component) {
-  _inherits(iphone8plus, _Component);
+var Iphone8plus = function (_Component) {
+  _inherits(Iphone8plus, _Component);
 
-  function iphone8plus() {
-    _classCallCheck(this, iphone8plus);
+  function Iphone8plus() {
+    _classCallCheck(this, Iphone8plus);
 
-    return _possibleConstructorReturn(this, (iphone8plus.__proto__ || Object.getPrototypeOf(iphone8plus)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Iphone8plus.__proto__ || Object.getPrototypeOf(Iphone8plus)).apply(this, arguments));
   }
 
-  _createClass(iphone8plus, [{
+  _createClass(Iphone8plus, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -51,7 +51,7 @@ var iphone8plus = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         ),
         _react2.default.createElement("div", { className: "home" }),
         _react2.default.createElement("div", { className: "bottom-bar" })
@@ -59,13 +59,13 @@ var iphone8plus = function (_Component) {
     }
   }]);
 
-  return iphone8plus;
+  return Iphone8plus;
 }(_react.Component);
 
-exports.default = iphone8plus;
+exports.default = Iphone8plus;
 
 
-iphone8plus.propTypes = {
+Iphone8plus.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

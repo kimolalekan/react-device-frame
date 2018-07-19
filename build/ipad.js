@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ipad = function (_Component) {
-  _inherits(ipad, _Component);
+var Ipad = function (_Component) {
+  _inherits(Ipad, _Component);
 
-  function ipad() {
-    _classCallCheck(this, ipad);
+  function Ipad() {
+    _classCallCheck(this, Ipad);
 
-    return _possibleConstructorReturn(this, (ipad.__proto__ || Object.getPrototypeOf(ipad)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Ipad.__proto__ || Object.getPrototypeOf(Ipad)).apply(this, arguments));
   }
 
-  _createClass(ipad, [{
+  _createClass(Ipad, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -46,20 +46,20 @@ var ipad = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         ),
         _react2.default.createElement("div", { className: "home" })
       );
     }
   }]);
 
-  return ipad;
+  return Ipad;
 }(_react.Component);
 
-exports.default = ipad;
+exports.default = Ipad;
 
 
-ipad.propTypes = {
+Ipad.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

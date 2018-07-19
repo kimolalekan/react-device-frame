@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
 
-export default class galaxys5 extends Component {
+export default class Galaxys5 extends Component {
   render() {
     let color;
     this.props.color ? (color = this.props.color) : (color = "black");
@@ -17,7 +17,7 @@ export default class galaxys5 extends Component {
         <div className="sensor" />
         <div className="speaker" />
         <div className="screen">
-          <iframe src={this.props.url} />
+          <iframe src={this.props.site} />
         </div>
         <div className="home" />
       </div>
@@ -27,7 +27,7 @@ export default class galaxys5 extends Component {
 }
 
 
-galaxys5.propTypes = {
+Galaxys5.propTypes = {
   color: PropTypes.string,
-  url: PropTypes.string
+  site: PropTypes.string
 };

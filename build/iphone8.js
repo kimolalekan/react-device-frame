@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var iphone8 = function (_Component) {
-  _inherits(iphone8, _Component);
+var Iphone8 = function (_Component) {
+  _inherits(Iphone8, _Component);
 
-  function iphone8() {
-    _classCallCheck(this, iphone8);
+  function Iphone8() {
+    _classCallCheck(this, Iphone8);
 
-    return _possibleConstructorReturn(this, (iphone8.__proto__ || Object.getPrototypeOf(iphone8)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Iphone8.__proto__ || Object.getPrototypeOf(Iphone8)).apply(this, arguments));
   }
 
-  _createClass(iphone8, [{
+  _createClass(Iphone8, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -51,7 +51,7 @@ var iphone8 = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         ),
         _react2.default.createElement("div", { className: "home" }),
         _react2.default.createElement("div", { className: "bottom-bar" })
@@ -59,13 +59,13 @@ var iphone8 = function (_Component) {
     }
   }]);
 
-  return iphone8;
+  return Iphone8;
 }(_react.Component);
 
-exports.default = iphone8;
+exports.default = Iphone8;
 
 
-iphone8.propTypes = {
+Iphone8.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };

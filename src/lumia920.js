@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
 
-export default class lumia920 extends Component {
+export default class Lumia920 extends Component {
   render() {
     let color;
     this.props.color ? (color = this.props.color) : (color = "yellow");
@@ -16,7 +16,7 @@ export default class lumia920 extends Component {
         <div className="camera" />
         <div className="speaker" />
         <div className="screen">
-          <iframe src={this.props.url} />
+          <iframe src={this.props.site} />
         </div>
       </div>
     );
@@ -24,7 +24,7 @@ export default class lumia920 extends Component {
 }
 
 
-lumia920.propTypes = {
+Lumia920.propTypes = {
   color: PropTypes.string,
-  url: PropTypes.string
+  site: PropTypes.string
 };

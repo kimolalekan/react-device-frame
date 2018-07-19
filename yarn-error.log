@@ -1,0 +1,72 @@
+Arguments: 
+  /usr/local/Cellar/node/9.3.0_1/bin/node /usr/local/bin/yarn publish
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/ImageMagick/bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  9.3.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  {
+    "name": "react-device-frame",
+    "version": "2.0.6",
+    "description": "Preview website on a device frame",
+    "main": "react-device-frame.js",
+    "scripts": {
+      "build": "babel src -d build",
+      "lint": "eslint src/** --fix ; exit 0",
+      "lint:watch": "esw -w src/**"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/kimolalekan/react-device-frame.git"
+    },
+    "author": "Olalekan Animashaun <kim.olalekan@gmail.com> (https://kimolalekan.github.io/)",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/kimolalekan/react-device-frame/issues"
+    },
+    "homepage": "https://github.com/kimolalekan/react-device-frame#readme",
+    "devDependencies": {
+      "babel-cli": "^6.26.0",
+      "babel-core": "^6.26.0",
+      "babel-eslint": "^7.2.3",
+      "babel-preset-es2015": "^6.24.1",
+      "babel-preset-react": "^6.24.1",
+      "eslint": "^4.7.1",
+      "eslint-plugin-import": "^2.7.0",
+      "eslint-plugin-jsx-a11y": "^6.0.2",
+      "eslint-plugin-react": "^7.3.0",
+      "eslint-watch": "^3.1.2",
+      "polished": "^1.7.0",
+      "prop-types": "^15.6.2",
+      "react": "^16.0.0",
+      "react-dom": "^16.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: https://registry.yarnpkg.com/react-device-frame: You cannot publish over the previously published versions: 2.0.6.
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:62098:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:123085:22)
+      at Request.emit (events.js:159:13)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:124068:10)
+      at Request.emit (events.js:159:13)
+      at Gunzip.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:123988:12)
+      at Object.onceWrapper (events.js:254:19)
+      at Gunzip.emit (events.js:164:20)
+      at endReadableNT (_stream_readable.js:1062:12)
+      at process._tickCallback (internal/process/next_tick.js:152:19)

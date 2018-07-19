@@ -24,16 +24,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var htcone = function (_Component) {
-  _inherits(htcone, _Component);
+var Htcone = function (_Component) {
+  _inherits(Htcone, _Component);
 
-  function htcone() {
-    _classCallCheck(this, htcone);
+  function Htcone() {
+    _classCallCheck(this, Htcone);
 
-    return _possibleConstructorReturn(this, (htcone.__proto__ || Object.getPrototypeOf(htcone)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Htcone.__proto__ || Object.getPrototypeOf(Htcone)).apply(this, arguments));
   }
 
-  _createClass(htcone, [{
+  _createClass(Htcone, [{
     key: "render",
     value: function render() {
       var color = void 0;
@@ -49,19 +49,19 @@ var htcone = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: "screen" },
-          _react2.default.createElement("iframe", { src: this.props.url })
+          _react2.default.createElement("iframe", { src: this.props.site })
         )
       );
     }
   }]);
 
-  return htcone;
+  return Htcone;
 }(_react.Component);
 
-exports.default = htcone;
+exports.default = Htcone;
 
 
-htcone.propTypes = {
+Htcone.propTypes = {
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  site: _propTypes2.default.string
 };
