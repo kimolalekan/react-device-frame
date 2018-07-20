@@ -86,57 +86,73 @@ var Device = function (_Component) {
   _createClass(Device, [{
     key: "getDevice",
     value: function getDevice(type) {
-      var device = void 0;
+      var device = void 0,
+          orientation = void 0;
+      this.props.landscape ? orientation = "landscape" : orientation = "";
+
       var iphonex = _react2.default.createElement(_iphonex2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var iphone8 = _react2.default.createElement(_iphone2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var iphone8plus = _react2.default.createElement(_iphone8plus2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var iphone5s = _react2.default.createElement(_iphone5s2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var iphone5c = _react2.default.createElement(_iphone5c2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var iphone4s = _react2.default.createElement(_iphone4s2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var ipad = _react2.default.createElement(_ipad2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var macbookpro = _react2.default.createElement(_macbookpro2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var htcone = _react2.default.createElement(_htcone2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var nexus5 = _react2.default.createElement(_nexus2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var lumia920 = _react2.default.createElement(_lumia2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var galaxys5 = _react2.default.createElement(_galaxys2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
       var galaxynote8 = _react2.default.createElement(_galaxynote2.default, {
         color: this.props.color,
+        orientation: orientation,
         site: this.props.url
       });
 
@@ -186,5 +202,7 @@ exports.default = Device;
 Device.propTypes = {
   name: _propTypes2.default.string.isRequired,
   color: _propTypes2.default.string,
-  url: _propTypes2.default.string
+  url: _propTypes2.default.string,
+  portrait: _propTypes2.default.boolean,
+  landscape: _propTypes2.default.boolean
 };

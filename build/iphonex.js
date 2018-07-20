@@ -41,7 +41,7 @@ var Iphonex = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device iphone-x" },
+        { className: "marvel-device iphone-x " + this.props.orientation },
         _react2.default.createElement(
           "div",
           { className: "notch" },
@@ -78,5 +78,6 @@ exports.default = Iphonex;
 
 Iphonex.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

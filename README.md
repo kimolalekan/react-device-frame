@@ -55,11 +55,13 @@ export default myDevice;
 
 **Properties**
 
-| Property | Value                                                                                                                                | Type   |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------ |
-| name     | iphone-x, iphone-8, iphone-8plus, iphone-5s, iphone-5c, iphone-4s, ipad-mini, nexus-5, htc-one, galaxy-s5, galaxy-note8, macbook-pro | string |
-| color    | white, red, yellow, black, blue, gold, silver                                                                                        | string |
-| url      | e.g https://www.google.com                                                                                                           | string |  |
+| Property  | Value                                                                                                                                | Type    |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| name      | iphone-x, iphone-8, iphone-8plus, iphone-5s, iphone-5c, iphone-4s, ipad-mini, nexus-5, htc-one, galaxy-s5, galaxy-note8, macbook-pro | string  |
+| color     | white, red, yellow, black, blue, gold, silver                                                                                        | string  |
+| url       | e.g https://www.google.com                                                                                                           | string  |
+| portrait  | true, false                                                                                                                          | boolean |
+| landscape | true, false                                                                                                                          | boolean |
 
 **LICENSE: MIT**
 

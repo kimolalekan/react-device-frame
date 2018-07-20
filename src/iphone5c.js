@@ -8,7 +8,9 @@ export default class Iphone5c extends Component {
     this.props.color ? (color = this.props.color) : (color = "green");
 
     return (
-      <div className={`marvel-device iphone5c ${color}`}>
+      <div
+        className={`marvel-device iphone5c ${this.props.orientation} ${color}`}
+      >
         <div className="top-bar" />
         <div className="sleep" />
         <div className="volume" />
@@ -27,5 +29,6 @@ export default class Iphone5c extends Component {
 
 Iphone5c.propTypes = {
   color: PropTypes.string,
-  site: PropTypes.string
+  site: PropTypes.string,
+  orientation: PropTypes.string
 };

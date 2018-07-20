@@ -41,7 +41,9 @@ var Iphone8plus = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device iphone8plus " + color },
+        {
+          className: "marvel-device iphone8plus " + this.props.orientation + " " + color
+        },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "sleep" }),
         _react2.default.createElement("div", { className: "volume" }),
@@ -67,5 +69,6 @@ exports.default = Iphone8plus;
 
 Iphone8plus.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

@@ -41,7 +41,9 @@ var Iphone5c = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device iphone5c " + color },
+        {
+          className: "marvel-device iphone5c " + this.props.orientation + " " + color
+        },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "sleep" }),
         _react2.default.createElement("div", { className: "volume" }),
@@ -67,5 +69,6 @@ exports.default = Iphone5c;
 
 Iphone5c.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

@@ -41,7 +41,7 @@ var Macbookpro = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device macbook" },
+        { className: "marvel-device macbook " + this.props.orientation },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "camera" }),
         _react2.default.createElement(
@@ -62,5 +62,6 @@ exports.default = Macbookpro;
 
 Macbookpro.propTypes = {
   color: _propTypes2.default.string,
+  orientation: _propTypes2.default.string,
   site: _propTypes2.default.string
 };

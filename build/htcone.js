@@ -41,7 +41,7 @@ var Htcone = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device htc-one" },
+        { className: "marvel-device htc-one " + this.props.orientation },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "camera" }),
         _react2.default.createElement("div", { className: "sensor" }),
@@ -63,5 +63,6 @@ exports.default = Htcone;
 
 Htcone.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

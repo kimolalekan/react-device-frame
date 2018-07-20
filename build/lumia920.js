@@ -41,7 +41,9 @@ var Lumia920 = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device lumia920 " + color },
+        {
+          className: "marvel-device lumia920 " + this.props.orientation + " " + color
+        },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "volume" }),
         _react2.default.createElement("div", { className: "camera" }),
@@ -63,5 +65,6 @@ exports.default = Lumia920;
 
 Lumia920.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

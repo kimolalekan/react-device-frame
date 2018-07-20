@@ -41,7 +41,7 @@ var Nexus5 = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device nexus5" },
+        { className: "marvel-device nexus5 " + this.props.orientation },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "sleep" }),
         _react2.default.createElement("div", { className: "volume" }),
@@ -63,5 +63,6 @@ exports.default = Nexus5;
 
 Nexus5.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

@@ -1,5 +1,3 @@
-
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
@@ -10,7 +8,9 @@ export default class Iphone8 extends Component {
     this.props.color ? (color = this.props.color) : (color = "gold");
 
     return (
-      <div className={`marvel-device iphone8 ${color}`}>
+      <div
+        className={`marvel-device iphone8 ${this.props.orientation} ${color}`}
+      >
         <div className="top-bar" />
         <div className="sleep" />
         <div className="volume" />
@@ -27,8 +27,8 @@ export default class Iphone8 extends Component {
   }
 }
 
-
 Iphone8.propTypes = {
   color: PropTypes.string,
+  orientation: PropTypes.string,
   site: PropTypes.string
 };

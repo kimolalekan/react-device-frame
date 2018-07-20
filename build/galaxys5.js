@@ -41,7 +41,7 @@ var Galaxys5 = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device s5 " + color },
+        { className: "marvel-device s5 " + this.props.orientation + " " + color },
         _react2.default.createElement("div", { className: "top-bar" }),
         _react2.default.createElement("div", { className: "sleep" }),
         _react2.default.createElement("div", { className: "camera" }),
@@ -65,5 +65,6 @@ exports.default = Galaxys5;
 
 Galaxys5.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

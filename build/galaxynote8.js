@@ -41,7 +41,7 @@ var Galaxynote8 = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device note8" },
+        { className: "marvel-device note8 " + this.props.orientation },
         _react2.default.createElement("div", { className: "inner" }),
         _react2.default.createElement(
           "div",
@@ -71,5 +71,6 @@ exports.default = Galaxynote8;
 
 Galaxynote8.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };

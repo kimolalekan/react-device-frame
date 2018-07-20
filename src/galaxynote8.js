@@ -1,5 +1,3 @@
-
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
@@ -10,8 +8,7 @@ export default class Galaxynote8 extends Component {
     this.props.color ? (color = this.props.color) : (color = "black");
 
     return (
-
-      <div className="marvel-device note8">
+      <div className={`marvel-device note8 ${this.props.orientation}`}>
         <div className="inner" />
         <div className="overflow">
           <div className="shadow" />
@@ -30,8 +27,8 @@ export default class Galaxynote8 extends Component {
   }
 }
 
-
 Galaxynote8.propTypes = {
   color: PropTypes.string,
-  site: PropTypes.string
+  site: PropTypes.string,
+  orientation: PropTypes.string
 };

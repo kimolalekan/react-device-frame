@@ -16,72 +16,97 @@ import Lumia920 from "./lumia920";
 
 export default class Device extends Component {
   getDevice(type) {
-    let device;
-    const iphonex = (<Iphonex
-      color={this.props.color}
-      site={this.props.url}
-    />);
-    const iphone8 = (<Iphone8
-      color={this.props.color}
-      site={this.props.url}
-    />);
+    let device, orientation;
+    this.props.landscape ? (orientation = "landscape") : (orientation = "");
+
+    const iphonex = (
+      <Iphonex
+        color={this.props.color}
+        orientation={orientation}
+        site={this.props.url}
+      />
+    );
+    const iphone8 = (
+      <Iphone8
+        color={this.props.color}
+        orientation={orientation}
+        site={this.props.url}
+      />
+    );
     const iphone8plus = (
       <Iphone8plus
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
     const iphone5s = (
       <Iphone5s
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
     const iphone5c = (
       <Iphone5c
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
     const iphone4s = (
       <Iphone4s
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
-    const ipad = (<Ipad
-      color={this.props.color}
-      site={this.props.url}
-    />);
+    const ipad = (
+      <Ipad
+        color={this.props.color}
+        orientation={orientation}
+        site={this.props.url}
+      />
+    );
     const macbookpro = (
       <Macbookpro
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
-    const htcone = (<Htcone
-      color={this.props.color}
-      site={this.props.url}
-    />);
-    const nexus5 = (<Nexus5
-      color={this.props.color}
-      site={this.props.url}
-    />);
+    const htcone = (
+      <Htcone
+        color={this.props.color}
+        orientation={orientation}
+        site={this.props.url}
+      />
+    );
+    const nexus5 = (
+      <Nexus5
+        color={this.props.color}
+        orientation={orientation}
+        site={this.props.url}
+      />
+    );
     const lumia920 = (
       <Lumia920
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
     const galaxys5 = (
       <Galaxys5
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
     const galaxynote8 = (
       <Galaxynote8
         color={this.props.color}
+        orientation={orientation}
         site={this.props.url}
       />
     );
@@ -125,5 +150,7 @@ export default class Device extends Component {
 Device.propTypes = {
   name: PropTypes.string.isRequired,
   color: PropTypes.string,
-  url: PropTypes.string
+  url: PropTypes.string,
+  portrait: PropTypes.boolean,
+  landscape: PropTypes.boolean
 };

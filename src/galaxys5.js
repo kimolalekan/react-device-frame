@@ -1,5 +1,3 @@
-
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import "./devices.css";
@@ -10,7 +8,7 @@ export default class Galaxys5 extends Component {
     this.props.color ? (color = this.props.color) : (color = "black");
 
     return (
-      <div className={`marvel-device s5 ${color}`}>
+      <div className={`marvel-device s5 ${this.props.orientation} ${color}`}>
         <div className="top-bar" />
         <div className="sleep" />
         <div className="camera" />
@@ -21,13 +19,12 @@ export default class Galaxys5 extends Component {
         </div>
         <div className="home" />
       </div>
-
     );
   }
 }
 
-
 Galaxys5.propTypes = {
   color: PropTypes.string,
-  site: PropTypes.string
+  site: PropTypes.string,
+  orientation: PropTypes.string
 };

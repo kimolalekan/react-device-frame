@@ -41,7 +41,7 @@ var Ipad = function (_Component) {
 
       return _react2.default.createElement(
         "div",
-        { className: "marvel-device ipad " + color },
+        { className: "marvel-device ipad " + this.props.orientation + " " + color },
         _react2.default.createElement("div", { className: "camera" }),
         _react2.default.createElement(
           "div",
@@ -61,5 +61,6 @@ exports.default = Ipad;
 
 Ipad.propTypes = {
   color: _propTypes2.default.string,
-  site: _propTypes2.default.string
+  site: _propTypes2.default.string,
+  orientation: _propTypes2.default.string
 };
