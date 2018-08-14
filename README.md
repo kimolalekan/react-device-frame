@@ -44,13 +44,11 @@ $ npm i react-device-frame --save
 import React, { Component } from "react";
 import Device from "react-device-frame";
 
-class myDevice extends Component {
+export default class myDevice extends Component {
   render() {
     return <Device name="iphone-8" color="gold" url="https://www.google.com" />;
   }
 }
-
-export default myDevice;
 ```
 
 **Properties**
