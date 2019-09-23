@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Iphonex from "./iphonex";
-import Iphone8 from "./iphone8";
-import Iphone8plus from "./iphone8plus";
-import Iphone5s from "./iphone5s";
-import Iphone5c from "./iphone5c";
-import Iphone4s from "./iphone4s";
-import Ipad from "./ipad";
-import Macbookpro from "./macbookpro";
-import Nexus5 from "./nexus5";
-import Galaxys5 from "./galaxys5";
-import Galaxynote8 from "./galaxynote8";
-import Htcone from "./htcone";
-import Lumia920 from "./lumia920";
+import Iphonex from "./device/iphonex";
+import Iphone8 from "./device/iphone8";
+import Iphone8plus from "./device/iphone8plus";
+import Iphone5s from "./device/iphone5s";
+import Iphone5c from "./device/iphone5c";
+import Iphone4s from "./device/iphone4s";
+import Ipad from "./device/ipad";
+import Macbookpro from "./device/macbookpro";
+import Nexus5 from "./device/nexus5";
+import Galaxys5 from "./device/galaxys5";
+import Galaxynote8 from "./device/galaxynote8";
+import Htcone from "./device/htcone";
+import Lumia920 from "./device/lumia920";
 
 export default class Device extends Component {
   getDevice(type) {
@@ -111,33 +111,50 @@ export default class Device extends Component {
       />
     );
 
-    if (type === "iphone-x") {
-      return iphonex;
-    } else if (type === "iphone-8") {
-      return iphone8;
-    } else if (type === "iphone-8plus") {
-      return iphone8plus;
-    } else if (type === "iphone-5s") {
-      return iphone5s;
-    } else if (type === "iphone-5c") {
-      return iphone5c;
-    } else if (type === "iphone-4s") {
-      return iphone4s;
-    } else if (type === "ipad-mini") {
-      return ipad;
-    } else if (type === "macbook-pro") {
-      return macbookpro;
-    } else if (type === "htc-one") {
-      return htcone;
-    } else if (type === "lumia-920") {
-      return lumia920;
-    } else if (type === "nexus-5") {
-      return nexus5;
-    } else if (type === "galaxy-s5") {
-      return galaxys5;
-    } else if (type === "galaxy-note8") {
-      return galaxynote8;
+    switch (type) {
+      case "iphone-x":
+        device = iphonex;
+      break;
+      case "iphone-8":
+        device = iphone8;
+      break;
+      case "iphone-8plus":
+        device = iphone8plus;
+      break;
+      case "iphone-5s":
+        device = iphone5s;
+      break;
+      case "iphone-5c":
+        device = iphone5c;
+      break;
+      case "iphone-4s":
+        device = iphone4s;
+      break;
+      case "ipad-mini":
+        device = ipad;
+      break;
+      case "macbook-pro":
+        device = macbookpro;
+      break;
+      case "htc-one":
+        device = htcone;
+      break;
+      case "lumia-920":
+        device = lumia920;
+      break;
+      case "nexus-5":
+        device = nexus5;
+      break;
+      case "galaxy-s5":
+        device = galaxys5;
+      break;
+      case "galaxy-note8":
+        device = galaxynote8;
+      break;
     }
+
+    return device; 
+
   }
 
   render() {
