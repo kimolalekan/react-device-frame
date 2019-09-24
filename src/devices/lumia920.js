@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
+
+
 
 export default class Lumia920 extends Component {
   render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "yellow");
+    
+    const color = (this.props.color) ? this.props.color : "yellow";
 
     return (
       <div
@@ -16,15 +18,11 @@ export default class Lumia920 extends Component {
         <div className="camera" />
         <div className="speaker" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
       </div>
     );
   }
 }
 
-Lumia920.propTypes = {
-  color: PropTypes.string,
-  site: PropTypes.string,
-  orientation: PropTypes.string
-};
+Lumia920.propTypes = Props;

@@ -1,0 +1,245 @@
+// common button style inside or outside the drawer
+button.toggle {
+
+  // display: flex;
+  // align-items: center;
+  font-weight: 700;
+  
+  i {
+    margin-right: .25rem;
+  }
+  
+}
+
+#react-device-frame-drawer__controls {
+  // make sure the drawer appear above the feature preview blur <Dimmer/> 
+  z-index: 1005;
+  position: fixed;
+  top: 5.5rem;
+  right: -8.4rem;
+  opacity: 1;
+  padding-right: 3rem;
+
+  // add a bit of space on the right hand side of the phone icon
+  .toggle-open i {
+    margin-right: .5rem;
+  }
+
+  // hide the drawer open controls when the drawer is open
+  &.drawer-open{
+    opacity: 0;
+    -webkit-transition: opacity .4s ease-in-out;
+    -moz-transition: opacity .4s ease-in-out;
+    -o-transition: opacity .4s ease-in-out;
+    transition: opacity .4s ease-in-out;
+  }
+
+  // position the open button most of the way off the screen until you hover over it, see &:hover, below.
+  .toggle-open {
+    padding-right: 3rem;
+  }
+
+  // hide the device selection menu until you're hovering over the #react-device-frame-drawer__controls, 
+  // see &:hover, below. this fixes a bug where the area collapses with the menu still open
+  .dropdown-menu {
+    opacity: 0;
+  }
+
+  &:hover{
+    // position the button and the device menu onto the screen when hovering over the control area
+    right: -2rem;
+    // remove the extra padding from the right hand side of the button when you're hovering in the controls area
+    .toggle-open {
+      padding-right: 1.2rem;
+    } 
+    // show the dropdown menu when you're hovering within the controls area. this fixes a bug where
+    // the area collapses with the menu still open
+    .dropdown-menu {
+      opacity: 1;
+    } 
+  }
+
+}
+
+
+// create a small "•" before each selected menu item
+.dropdown-menu {  
+  
+  // spacing and color of the "•"
+  .dropdown-item i {
+    width: 5px;
+    margin-right: 5px;
+    margin-left: -10px;
+    position: relative;
+    bottom: 3px;
+    color: #000000;
+    text-align: center;
+  }
+  // sizing of the "•"
+  .dropdown-item i:before {
+    font-size: 4px;
+  }
+
+}
+
+.zoom-100 {
+  // within the zoom reset class bump the zoom up to reset to the original value before the 
+  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+  // regardless of zoom level. 
+  // make sure that zoom is reset to 100% if a previous class has bumped up the zoom level
+  .zoom-reset {
+    zoom: 100%;
+  }
+}
+
+.zoom-90 { 
+  // within the zoom reset class bump the zoom up to reset to the original value before the 
+  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+  // regardless of zoom level
+  .zoom-reset {
+    zoom: 110%;
+  }
+}
+
+.zoom-80 {
+  // within the zoom reset class bump the zoom up to reset to the original value before the 
+  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+  // regardless of zoom level
+  .zoom-reset {
+    zoom: 120%;
+  }
+
+  // set menu offset to fix problem of menu going bananas
+  // when zoom is set to 80%
+  .dropdown-menu {
+    left: -137px !important;
+  }
+}
+
+.zoom-70 {
+
+  // within the zoom reset class bump the zoom up to reset to the original value before the 
+  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+  // regardless of zoom level
+  .zoom-reset {
+    zoom: 130%;
+  }
+
+  // set menu offset to fix problem of menu going bananas
+  // when zoom is set to 70%
+  .dropdown-menu {
+    left: -153px !important;
+  }
+
+  // TODO: make sure that the close button stays centered on the frame regardless of zoom level or device
+  .toggle-close {
+    margin-left: 3.1rem;
+  }
+
+}
+
+.device-menu .dropdown-toggle {
+  padding: 5px 5px 6px 5px !important;
+}
+
+// position the top close control
+.close-control-bottom {
+  position: relative;
+  bottom: 20px;
+}
+
+// position the bottom close control
+.close-control-top {
+  position: relative;
+  bottom: -20px;
+}
+
+.close-control {
+  display: flex;
+  justify-content: center;
+  z-index: 100;
+
+  .dropdown-toggle {
+    padding: 0 0.5rem !important;
+  }
+
+}
+
+// hide the zoom menus
+.zoom-menu {
+  opacity: 0;
+}
+// show the top zoom menu when you're scrolled to the top of the drawer and 
+// you're hovering over the close control
+.at-top .close-control-top:hover{
+  .zoom-menu{
+    opacity: 1;
+  }
+}
+// show the bottom zoom menu when you're scrolled to the bottom of the drawer and 
+// you're hovering over the close control
+.at-bottom .close-control-bottom:hover {
+  .zoom-menu{
+    opacity: 1;
+  }
+}
+
+// styles for everything inside the drawer
+div#react-device-frame-drawer {
+  // make sure the drawer appear above the feature preview blur <Dimmer/> 
+  z-index: 1005;
+  // only allow mouse interaction in visible areas of the drawer
+  pointer-events: visibleFill;
+  // don't show the drawer overlay
+  background-color: initial !important;
+  // set the width of the drawer to only be as wide as its content
+  width: fit-content;
+  // pad out the left side of the drawer from the window edge and allow
+  // iPhone buttons to show on the left hand edge
+  padding: 0px 20px 0 5px;
+  // TODO: Set different paddings for the drawer based on device and zoom level
+  padding-top: 150px;
+  // push the drawer all the way to the right of the window
+  // TODO: allow drawer to be displayed at left?
+  margin-left: auto;
+
+  button.toggle-close {
+    // TODO: based on zoom level set this so it centers within device frame
+    margin-left: 2.3rem;
+    // hide the lower close button until .at-bottom is also set, see &.at-bottom
+    &.toggle-bottom {
+      z-index: 105;
+      opacity:0;
+    }
+  
+  }
+
+  // control fade in/out of top vs. bottom button based on where user is scrolled to
+  &.at-bottom{
+    // hide the top close control when the drawer is scrolled to the bottom
+    button.toggle-top{
+      opacity:0;
+      -webkit-transition: opacity .4s ease-in-out;
+      -moz-transition: opacity .4s ease-in-out;
+      -o-transition: opacity .4s ease-in-out;
+      transition: opacity .4s ease-in-out;
+    }
+    // show the bottom close control when the drawer is scrolled to the bottom
+    button.toggle-bottom{
+      opacity:1;
+      -webkit-transition: opacity .4s ease-in-out;
+      -moz-transition: opacity .4s ease-in-out;
+      -o-transition: opacity .4s ease-in-out;
+      transition: opacity .4s ease-in-out;
+    }
+  }
+
+  // set zoom levels for the drawer and its content
+  &.zoom-100 { zoom: 100%; }
+  &.zoom-90 { zoom: 90%; }
+  &.zoom-80{ zoom: 80%; }
+  &.zoom-70{ zoom: 70%; }
+
+}
+
+

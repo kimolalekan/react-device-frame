@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
 
 export default class Macbookpro extends Component {
   render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "black");
-
+    
+    // TODO: does Macbookpro use color?
+    // const color = (this.props.color) ? this.props.color : "black";
+    // TODO: does macbook use orientation!?
     return (
       <div className={`marvel-device macbook ${this.props.orientation}`}>
         <div className="top-bar" />
         <div className="camera" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
         <div className="bottom-bar" />
       </div>
@@ -20,8 +21,4 @@ export default class Macbookpro extends Component {
   }
 }
 
-Macbookpro.propTypes = {
-  color: PropTypes.string,
-  orientation: PropTypes.string,
-  site: PropTypes.string
-};
+Macbookpro.propTypes = Props;

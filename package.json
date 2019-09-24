@@ -2,7 +2,7 @@
   "name": "react-device-frame",
   "version": "2.1.4",
   "description": "Preview website on a device frame",
-  "main": "react-device-frame.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "babel src -d build",
     "lint": "eslint src/** --fix ; exit 0",
@@ -34,5 +34,11 @@
     "prop-types": "^15.6.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
+  },
+  "dependencies": {
+    "Devices.css": "https://github.com/perfectcube/devices.css",
+    "lodash.merge": "^4.6.2",
+    "react-drag-drawer": "^3.3.1",
+    "react-tooltip": "^3.11.1"
   }
 }

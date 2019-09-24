@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
 
 export default class Galaxynote8 extends Component {
   render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "black");
+    
+    // TODO: does Galaxynote8 use color?
+    // const color = (this.props.color) ? this.props.color : "black";
 
     return (
       <div className={`marvel-device note8 ${this.props.orientation}`}>
@@ -20,15 +21,11 @@ export default class Galaxynote8 extends Component {
         <div className="volume" />
         <div className="camera" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
       </div>
     );
   }
 }
 
-Galaxynote8.propTypes = {
-  color: PropTypes.string,
-  site: PropTypes.string,
-  orientation: PropTypes.string
-};
+Galaxynote8.propTypes = Props;

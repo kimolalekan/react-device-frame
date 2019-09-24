@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
 
 export default class Iphone4s extends Component {
   render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "black");
+
+    const color = (this.props.color) ? this.props.color : "black";
 
     return (
       <div
@@ -18,7 +18,7 @@ export default class Iphone4s extends Component {
         <div className="sensor" />
         <div className="speaker" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
         <div className="home" />
         <div className="bottom-bar" />
@@ -27,8 +27,4 @@ export default class Iphone4s extends Component {
   }
 }
 
-Iphone4s.propTypes = {
-  color: PropTypes.string,
-  site: PropTypes.string,
-  orientation: PropTypes.string
-};
+Iphone4s.propTypes = Props;

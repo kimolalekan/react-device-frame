@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
+
+
 
 export default class Iphone8plus extends Component {
   render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "gold");
+    
+    const color = (this.props.color) ? this.props.color : "gold";
 
     return (
       <div
@@ -20,7 +22,7 @@ export default class Iphone8plus extends Component {
         <div className="sensor" />
         <div className="speaker" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
         <div className="home" />
         <div className="bottom-bar" />
@@ -29,8 +31,4 @@ export default class Iphone8plus extends Component {
   }
 }
 
-Iphone8plus.propTypes = {
-  color: PropTypes.string,
-  site: PropTypes.string,
-  orientation: PropTypes.string
-};
+Iphone8plus.propTypes = Props;
