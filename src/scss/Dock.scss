@@ -16,7 +16,7 @@ button.toggle {
   z-index: 1005;
   position: fixed;
   top: 5.5rem;
-  right: -8.4rem;
+  right: -6.8rem;
   opacity: 1;
   padding-right: 3rem;
 
@@ -36,7 +36,11 @@ button.toggle {
 
   // position the open button most of the way off the screen until you hover over it, see &:hover, below.
   .toggle-open {
-    padding-right: 3rem;
+    // FIXME: this, in combination with #react-device-frame-drawer__controls:hover{ .toggle-open { padding-right: 1.2rem; } }
+    // | causes the button to jiggle wildly when you place the mouse over the left hand edge of the open button. 
+    // | if this changes note that #react-device-frame-drawer__controls:hover{ right: -2rem } and 
+    // | #react-device-frame-drawer__controls { right: -6.8rem } will also need to be adjusted
+    padding-right: 1.5rem;
   }
 
   // hide the device selection menu until you're hovering over the #react-device-frame-drawer__controls, 
@@ -45,7 +49,11 @@ button.toggle {
     opacity: 0;
   }
 
-  &:hover{
+  &:hover {
+    -webkit-transition: right .4s ease-in-out;
+    -moz-transition: right .4s ease-in-out;
+    -o-transition: right .4s ease-in-out;
+    transition: right .4s ease-in-out;
     // position the button and the device menu onto the screen when hovering over the control area
     right: -2rem;
     // remove the extra padding from the right hand side of the button when you're hovering in the controls area
@@ -61,94 +69,110 @@ button.toggle {
 
 }
 
-
-// create a small "•" before each selected menu item
-.dropdown-menu {  
-  
-  // spacing and color of the "•"
-  .dropdown-item i {
-    width: 5px;
-    margin-right: 5px;
-    margin-left: -10px;
-    position: relative;
-    bottom: 3px;
-    color: #000000;
-    text-align: center;
+// a style specific to our use case. left in as an example of how how to handle
+// a menu that shows up on the right hand side. in this case the menu covers the 
+// close button. 
+body.aside-menu-lg-show {
+  #react-device-frame-drawer__controls {
+    right: 10.8rem;
+    &:hover {
+      right: 15.4rem;
+    }  
   }
-  // sizing of the "•"
-  .dropdown-item i:before {
-    font-size: 4px;
+}
+
+#react-device-frame-drawer__controls, #react-device-frame-drawer {
+  // create a small "•" before each selected menu item on all
+  .dropdown-menu {  
+    
+    // spacing and color of the "•"
+    .dropdown-item i {
+      width: 5px;
+      margin-right: 5px;
+      margin-left: -10px;
+      position: relative;
+      bottom: 3px;
+      color: #000000;
+      text-align: center;
+    }
+    // sizing of the "•"
+    .dropdown-item i:before {
+      font-size: 4px;
+    }
+
+  }
+
+  .open-up .dropdown-toggle::after {
+    transform: rotate(180deg);
   }
 
 }
 
+// within the zoom reset class bump the zoom up to reset to the original value before the 
+// zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+// regardless of zoom level. 
+.zoom-100 { .zoom-reset { zoom: 100%; } }
+ .zoom-90 { .zoom-reset { zoom: 110%; } }
+ .zoom-80 { .zoom-reset { zoom: 120%; } }
+ .zoom-70 { .zoom-reset { zoom: 130%; } }
+
+
+// reposition zoom menu based on zoom level and selected device
 .zoom-100 {
-  // within the zoom reset class bump the zoom up to reset to the original value before the 
-  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
-  // regardless of zoom level. 
-  // make sure that zoom is reset to 100% if a previous class has bumped up the zoom level
-  .zoom-reset {
-    zoom: 100%;
+  // realign the dropdown items when menu is ar right hand side
+  &.at-right .dropdown-menu {
+    left: -7rem !important;
   }
+
 }
 
 .zoom-90 { 
-  // within the zoom reset class bump the zoom up to reset to the original value before the 
-  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
-  // regardless of zoom level
-  .zoom-reset {
-    zoom: 110%;
+  // realign the dropdown items when menu is ar right hand side
+  &.at-right .dropdown-menu {
+    left: -7rem !important;
   }
 }
 
 .zoom-80 {
-  // within the zoom reset class bump the zoom up to reset to the original value before the 
-  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
-  // regardless of zoom level
-  .zoom-reset {
-    zoom: 120%;
-  }
-
-  // set menu offset to fix problem of menu going bananas
+  // set menu offset to fix problem of menu open position misalignment
   // when zoom is set to 80%
-  .dropdown-menu {
-    left: -137px !important;
+  &.at-right .dropdown-menu {
+    left: -9.3rem !important;
   }
 }
 
 .zoom-70 {
-
-  // within the zoom reset class bump the zoom up to reset to the original value before the 
-  // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
-  // regardless of zoom level
-  .zoom-reset {
-    zoom: 130%;
-  }
-
-  // set menu offset to fix problem of menu going bananas
+  // set menu offset to fix problem of menu open position misalignment
   // when zoom is set to 70%
-  .dropdown-menu {
-    left: -153px !important;
+  &.at-right .dropdown-menu {
+    left: -10rem !important;
   }
-
-  // TODO: make sure that the close button stays centered on the frame regardless of zoom level or device
-  .toggle-close {
-    margin-left: 3.1rem;
-  }
-
 }
 
+
+// pad out the dropdown toggle button for the device menu
 .device-menu .dropdown-toggle {
   padding: 5px 5px 6px 5px !important;
 }
 
 // position the top close control
+// Ref: zrckpye8b1
+// Link: https://perfectcube.teamwork.com/tasks/25784228
+// TODO: some of the phone frames overlap the edge position that we're placing the close button over
+// + as a default position. Add device specific nudges to make the close button always sit halfway
+// + off the edge of the active device.
 .close-control-bottom {
   position: relative;
   bottom: 20px;
 }
 
 // position the bottom close control
+
+// Ref: zrckpye8b1
+// Link: https://perfectcube.teamwork.com/tasks/25784228
+// TODO: some of the phone frames overlap the edge position that we're placing the close button over
+// + as a default position. Add device specific nudges to make the close button always sit halfway
+// + off the edge of the active device.
 .close-control-top {
   position: relative;
   bottom: -20px;
@@ -165,27 +189,37 @@ button.toggle {
 
 }
 
-// hide the zoom menus
-.zoom-menu {
+// flip the buttons around when positioned at the left hand side
+.at-left .close-control {
+  flex-direction: row-reverse;
+}
+
+// hide the zoom menu and the float button by default
+.zoom-menu, .toggle-float {
   opacity: 0;
+  margin: 0 !important;
+  -webkit-transition: opacity .1s ease-in-out;
+  -moz-transition: opacity .1s ease-in-out;
+  -o-transition: opacity .1s ease-in-out;
+  transition: opacity .1s ease-in-out;
 }
 // show the top zoom menu when you're scrolled to the top of the drawer and 
 // you're hovering over the close control
 .at-top .close-control-top:hover{
-  .zoom-menu{
+  .zoom-menu, .toggle-float {
     opacity: 1;
   }
 }
 // show the bottom zoom menu when you're scrolled to the bottom of the drawer and 
 // you're hovering over the close control
 .at-bottom .close-control-bottom:hover {
-  .zoom-menu{
+  .zoom-menu, .toggle-float {
     opacity: 1;
   }
 }
 
 // styles for everything inside the drawer
-div#react-device-frame-drawer {
+#react-device-frame-drawer {
   // make sure the drawer appear above the feature preview blur <Dimmer/> 
   z-index: 1005;
   // only allow mouse interaction in visible areas of the drawer
@@ -196,22 +230,32 @@ div#react-device-frame-drawer {
   width: fit-content;
   // pad out the left side of the drawer from the window edge and allow
   // iPhone buttons to show on the left hand edge
-  padding: 0px 20px 0 5px;
-  // TODO: Set different paddings for the drawer based on device and zoom level
-  padding-top: 150px;
+  padding: 0px 5px 0 5px;
+
+  // MacBookPro needs extra padding to keep the sides of the keyboard from getting cut off
+  &.device-macbook-pro {
+    padding-right: 5.5rem;
+    padding-left: 5.5rem;
+  }
+
+
   // push the drawer all the way to the right of the window
   // TODO: allow drawer to be displayed at left?
   margin-left: auto;
 
   button.toggle-close {
-    // TODO: based on zoom level set this so it centers within device frame
-    margin-left: 2.3rem;
+    margin: 0 .5rem;
     // hide the lower close button until .at-bottom is also set, see &.at-bottom
     &.toggle-bottom {
       z-index: 105;
       opacity:0;
     }
   
+  }
+
+  // control size, default visibility, and shape of the float position button
+  button.toggle-float {
+    padding: 0px 4px 0px 7px;
   }
 
   // control fade in/out of top vs. bottom button based on where user is scrolled to
@@ -240,6 +284,100 @@ div#react-device-frame-drawer {
   &.zoom-80{ zoom: 80%; }
   &.zoom-70{ zoom: 70%; }
 
+  &.zoom-100 {
+    // TODO: Set different paddings for the drawer based on device and zoom level
+    padding-top: 3rem;
+
+    &.device-iphone-8plus {
+      // padding-top: 4rem;
+    }
+
+    &.device-galaxy-note8 {
+      // padding-top: 4rem;
+    }
+
+    &.device-iphone-5s {
+      // padding-top: 10px;
+    }
+
+    &.device-iphone-4s {
+      // padding-top: 55px;
+    }
+
+    &.device-htc-one{
+      // padding-top: 55px;
+    }
+
+    &.device-galaxy-s5{
+      // padding-top: 55px;
+    }
+
+  }
+
+  &.zoom-90 {
+    // TODO: Set different paddings for the drawer based on device and zoom level
+    padding-top: 60px;
+    &.device-iphone-8plus{
+      padding-top: 120px;
+    }
+  }
+
+  &.device-nexus-5,
+  &.device-lumia-920{
+    // padding-top: 0px !important;
+  }
+
 }
 
+body {
+  // set the position of the drawer based on the at-* class
+  #react-device-frame-drawer {
+    &.at-right {
+      margin-left: auto;
+      margin-right: 1rem;
+      // TODO: it would be nice to slide the menu to the left or right based on it's margin value — But ...
+      // + Css does not work that way. Goodnight! 
+      // + Maybe rework the left/right position based on position instead of margin?
+      // Ref: nv0ya74exof
+      // Link: https://perfectcube.teamwork.com/tasks/25782847
+      // -webkit-transition: margin .4s ease-in-out;
+      // -moz-transition: margin .4s ease-in-out;
+      // -o-transition: margin .4s ease-in-out;
+      // transition: margin .4s ease-in-out;
+    }
+  
+    &.at-left {
+      margin-left: 10px;
+      // -webkit-transition: margin-left .4s ease-in-out;
+      // -moz-transition: margin-left .4s ease-in-out;
+      // -o-transition: margin-left .4s ease-in-out;
+      // transition: margin-left .4s ease-in-out;
+    }
+  }
+  
+  // NOTE: these are local rules for our specific use case. The rules have been 
+  // * left in place as examples of how to handle menus that toggle their visibility
+  // * and size based on classes attached to the <body>
+  
+  // when the drawer is positioned on the left and the left hand menu is showing
+  // (body.sidebar-lg-show) push the device drawer away from the left hand side
+  // to get it out of the way of the menu
+  &.sidebar-lg-show #react-device-frame-drawer.at-left {
+    margin-left: 15rem;
+  }
+  
+  // when the drawer is positioned on the left and the left hand menu is showing
+  // it's small version (body.sidebar-lg-show.sidebar-minimized) push the device 
+  // drawer away from the left hand side to get it out of the way of the menu
+  &.sidebar-lg-show.sidebar-minimized #react-device-frame-drawer.at-left {
+    margin-left: 4rem;
+  }
+
+  // when the drawer is positioned on the right and the right hand menu is showing
+  // (body.aside-menu-lg-show) push the device drawer away from the right hand side 
+  // to get it out of the way of the sidebar menu
+  &.aside-menu-lg-show #react-device-frame-drawer.at-right {
+    margin-right: 18.5rem;
+  }
+}
 
