@@ -4,10 +4,6 @@ import Props from './lib/Props';
 
 export default class Htcone extends Component {
   render() {
-    
-    // TODO: does HTC One use color?
-    // const color = (this.props.color) ? this.props.color : "gold";
-
     return (
       <div className={`marvel-device htc-one ${this.props.orientation}`}>
         <div className="top-bar" />

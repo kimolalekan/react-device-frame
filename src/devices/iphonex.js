@@ -5,10 +5,6 @@ import Props from './lib/Props';
 export default class Iphonex extends Component {
   
   render(){
-    
-    // TODO: does Iphonex use color?
-    // const color = (this.props.color) ? this.props.color : "gold";
-
     return (
       <div className={`marvel-device iphone-x ${this.props.orientation}`}>
         <div className="notch">

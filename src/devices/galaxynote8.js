@@ -4,10 +4,6 @@ import Props from './lib/Props';
 
 export default class Galaxynote8 extends Component {
   render() {
-    
-    // TODO: does Galaxynote8 use color?
-    // const color = (this.props.color) ? this.props.color : "black";
-
     return (
       <div className={`marvel-device note8 ${this.props.orientation}`}>
         <div className="inner" />

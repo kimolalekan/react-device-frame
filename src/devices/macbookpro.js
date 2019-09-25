@@ -4,12 +4,8 @@ import Props from './lib/Props';
 
 export default class Macbookpro extends Component {
   render() {
-    
-    // TODO: does Macbookpro use color?
-    // const color = (this.props.color) ? this.props.color : "black";
-    // TODO: does macbook use orientation!?
     return (
-      <div className={`marvel-device macbook ${this.props.orientation}`}>
+      <div className={`marvel-device macbook`}>
         <div className="top-bar" />
         <div className="camera" />
         <div className="screen">

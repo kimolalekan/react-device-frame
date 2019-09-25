@@ -4,10 +4,6 @@ import Props from './lib/Props';
 
 export default class Nexus5 extends Component {
   render() {
-    
-     // TODO: does Nexus5 use color?
-    // const color = (this.props.color) ? this.props.color : "gold";
-
     return (
       <div className={`marvel-device nexus5 ${this.props.orientation}`}>
         <div className="top-bar" />
