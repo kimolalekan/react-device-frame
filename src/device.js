@@ -20,7 +20,47 @@ import Lumia920 from "./devices/lumia920";
 import './scss/Device.scss';
 import 'Devices.css/assets/devices.min.css';
 
-const DEVICES = {
+
+const toLower = (set) => {
+  let processed = null;
+  const type = (_.isArray(set)) ? 'array' : 'object';
+  // set all values in the map to lowercase so it wont matter what the values we check against are stored as
+  switch (type) {
+    case 'array':
+      processed = [];
+      _.each(set,(name)=>{
+        const lower = _.toLower(name);
+        processed.push(lower);
+      });
+    break;
+  
+    case 'object':
+    default:
+      processed = {};
+      _.each(set,(hex,name)=>{
+        const lower = _.toLower(hex);
+        _.set(processed,name,lower);
+      });
+    break;
+  }
+  return processed;
+}
+
+// post processes device data to normalize specific information within the set
+const normalize = (source) => {
+  // iterate over the source and alter whatever is necessary in each device
+  _.each(source,(data,name) => {
+    // pull the colors out of device metadata and pass them to the color value normalizer
+    const color = toLower(data.meta.color);
+    // set the normalized colors back into the device metadata
+    _.set(source,`${name}.meta.color`,color);
+    // set the altered device data into the destination object
+    _.set(source,name,data);
+  });
+  return source;
+}
+
+const DEVICES = normalize({
   'galaxy-note8':{
     meta: {
       size: 'large',
@@ -36,8 +76,8 @@ const DEVICES = {
       type: 'phone',
       // source: https://marvelapp.github.io/devices.css/#s5
       color: {
-        'black':'#1e1e1e',
         'white':'#bcbcbc',
+        'black':'#1e1e1e',
       }
     },
     component: Galaxys5
@@ -57,8 +97,8 @@ const DEVICES = {
       type: 'tablet',
       // source: https://marvelapp.github.io/devices.css/#ipad
       color: {
-        'black': '#686868',
         'silver': '#bcbcbc',
+        'black': '#686868',
       }
     },
     component: Ipad
@@ -71,8 +111,8 @@ const DEVICES = {
       // NOTE: color options on page say black/white; this is a bug on the page. 
       // TODO: submit PR for broken docs here: http://marvelapp.github.io/devices.css/#iphone4s
       color: {
-        'black': '#686868',
         'silver': '#bcbcbc',
+        'black': '#686868',
       }
     },
     component: Iphone4s
@@ -83,11 +123,11 @@ const DEVICES = {
       type: 'phone',
       // source: https://marvelapp.github.io/devices.css/#iphone5c
       color: {
-        'green':'#97e563',
-        'white':'#FFFFFF',
-        'red':'#f96b6c',
-        'yellow':'#f2dc60',
-        'blue':'#33a2db',
+        'green': '#97E563',
+        'white': '#ffFFff',
+        'red': '#F96b6c',
+        'yellow': '#f2Dc60',
+        'blue': '#33A2db',
       },
     },
     component: Iphone5c
@@ -98,9 +138,9 @@ const DEVICES = {
       type: 'phone',
       // source: https://marvelapp.github.io/devices.css/#iphone5s
       color: {
-        'black': '#464646',
-        'gold': '#f9e7d3',
         'silver': '#d9dbdc',
+        'gold': '#f9e7d3',
+        'black': '#464646',
       },
     },
     component: Iphone5s
@@ -111,9 +151,9 @@ const DEVICES = {
       type: 'phone',
       // source: https://marvelapp.github.io/devices.css/#iphone8
       color: {
-        'black': '#464646',
         'gold': '#f9e7d3',
         'silver': '#d9dbdc',
+        'black': '#464646',
       },
     },
     component: Iphone8
@@ -124,9 +164,9 @@ const DEVICES = {
       type: 'phone',
       // source: https://marvelapp.github.io/devices.css/#iphone8plus
       color: {
-        'black': '#464646',
         'gold': '#f9e7d3',
         'silver': '#d9dbdc',
+        'black': '#464646',
       },
     },
     component: Iphone8plus
@@ -148,8 +188,8 @@ const DEVICES = {
       color: {
         'yellow': '#ffdd00',
         'black': '#000000',
-        'white': '#FFFFFF',
-        'red': '#CC3E32',
+        'white': '#ffffff',
+        'red': '#cc3e32',
         'blue': '#00acdd',
       },
     },
@@ -173,7 +213,7 @@ const DEVICES = {
     },
     component: Nexus5
   },
-};
+});
 
 // fills a convenience constant -> DEVICE_META
 const fillMeta = (from) => {
@@ -183,12 +223,6 @@ const fillMeta = (from) => {
     _.set(metadata,name,data.meta);
   });
   return metadata;
-}
-
-const validColor = (check,type) => {
-  const colors = deviceColors(type,'array');
-  const valid = _.includes(colors,check);
-  return valid;
 }
 
 const deviceName = (type) => {
@@ -240,7 +274,7 @@ const deviceColors = (type,format='object') => {
  * @param {string} type a valid device type
  * @returns {string} the default color for the device
  */
-const deviceColor = (type) => {
+const deviceColor = (type,format='object') => {
   let color = null;
   const colors = deviceColors(type);
   // NOTE: we're not guarding for a valid device here because deviceColors() does that for us. 
@@ -250,7 +284,57 @@ const deviceColor = (type) => {
     const names = _.keys(colors);
     // use the first entry in the array as the default color
     color = _.first(names);
-  }      
+    if (format === 'object') {
+      color = {[color]:colors[color]}
+    }
+  }
+  return color;
+}
+/**
+ * From a given {value} lookup it's key, or from a given key lookup it's {value} in the device's available colors. For
+ * example if a deice supports the color {'red':'#f96b6c'} and you pass in "red" you'll get back '#f96b6c' or if you 
+ * pass in '#f96b6c' you'll get back 'red'.
+ * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+ * @param {string} value a string to lookup in the device's meta.color table. 
+ * @returns {string|null} null if no mappable value found
+ */
+const colorMap = (type,value) => {
+  // get all available colors for this device {type}
+  const colors = deviceColors(type);
+  // clone the available colors into an object we can alter
+  let map = _.clone(colors);
+  // invert the map so the keys are now the values
+  const invert = _.invert(map);
+  // merge the inverted values into the map
+  map = _.merge(map,invert);
+  // set the check value to lowercase so it wont matter what case the incoming value is set as
+  const check = _.toLower(value);
+  // lookup the value in th map pulling out the #HEX or 
+  // the name based on what was passed in through value
+  // send back the default if no value can be found
+  const found = _.get(map,check,null);
+  return found;
+}
+
+const colorNames = (type) => {
+  const available = deviceColors(type);
+  const names = _.keys(available);
+  return names;
+}
+
+const colorValues = (type) => {
+  const available = deviceColors(type);
+  const values = _.values(available);
+  return values;
+}
+
+const colorUse = (type,using) => {
+  const available = deviceColors(type);
+  const fallback = deviceColor(type,'name');
+  // set the check value to lowercase so it wont matter what case the incoming value is set as
+  using = _.toLower(using);
+  // use the color in props or the fallback color
+  const color = _.get(available,using,available[fallback]);
   return color;
 }
 
@@ -300,7 +384,13 @@ export default class Device extends Component {
   //   // + value is detected
   // }
 
-
+  /**
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @param {object} cfg a configuration object with the following shape:
+   *                     @as {string} can be "raw" or "names".  
+   * @returns {array|object} if (cfg.as === "names") an array of color names. if (cfg.as === 'raw') an object with 
+   *                          the all supported colors in it as a {name:'#HEX-COLOR',name2:'#HEX-COLOR'} pairs.
+   */
   static getColors(type,cfg={}){
     cfg=_.merge({
       as:'raw' // this can be "raw" or "names"
@@ -310,19 +400,104 @@ export default class Device extends Component {
     return colors;
   }
 
-  static getColor(type){
-    const color = deviceColor(type);
+  /**
+   * Get a list of all supported devices as keys and each devices metadata as values
+   */
+  static getDevices() {
+    const devices = {};
+    _.each(DEVICES,(device,name)=>{
+      const data = _.pick(device,'meta');
+      _.set(devices,name,data.meta);
+    });
+    return devices;
+  }
+
+  /**
+   * Pass in a valid device type-name to get the default color for the device. 
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @param {object} cfg a configuration object with the following shape:
+   *                     @as {string} can be "raw" or "name". if you're getting the default device color and don't want to pull all the 
+   *                                  colors separately with Device.getColors() to get the value then use {as: 'raw'} 
+   * @returns {string|object} if (cfg.as === name) a string with the default color in it. if (cfg.as === name) an object with 
+   *                          the default color in it as a {name:'#HEX-COLOR'} pair.
+   */
+  static getColor(type,cfg={}){
+    cfg=_.merge({
+      as:'raw' // this can be "raw" or "name"
+    },cfg);
+    const format = (cfg.as === 'name') ? 'array' : 'object';
+    const color = deviceColor(type,format);
     return color;
   }
 
+  /**
+   * Get an array of info-* strings that let you know about the device
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @returns {array} an array of strings, formatted device metadata
+   */
   static getStats(type){
     const info = deviceStats(type);
     return info;
   }
 
-  static getName = (type) =>{
+  /**
+   * Get the human readable formatted name of the device from it's device type (key).
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @returns {string}
+   */
+  static getName(type){
     const name = deviceName(type);
     return name;
+  }
+
+  /**
+   * Check if a color {check} (name or value) is valid for a given device {type}
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @param {string} check a color value or name to check
+   * @returns {bool}
+   */
+  static colorValid(type,check){
+    const mapped = colorMap(type,check);
+    const valid = (mapped !== null) ? true : false;
+    return valid;
+  }
+
+  static colorUse(type,using){
+    const choose = colorUse(type,using);
+    return choose;
+  }
+
+  /**
+   * Get all available color names for a given device type
+   * @param {type} type 
+   * @returns {array}
+   */
+  static colorNames(type){
+    const colors = colorNames(type);
+    return colors;
+  }
+
+  /**
+   * get all available color values for a given device type
+   * @param {string} type 
+   * @returns {array}
+   */
+  static colorValues(type){
+    const colors = colorValues(type);
+    return colors;
+  }
+
+  /**
+   * From a given {value} lookup it's key, or from a given key lookup it's {value} in the device's available colors. For
+   * example if a deice supports the color {'red':'#f96b6c'} and you pass in "red" you'll get back '#f96b6c' or if you 
+   * pass in '#f96b6c' you'll get back 'red'.
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @param {string} value a string to lookup in the device's meta.color table. 
+   * @returns {string|null} null of no mappable color found
+   */
+  static colorMap(type,value){
+    const color = colorMap(type,value);
+    return color;
   }
 
   /**
@@ -334,12 +509,12 @@ export default class Device extends Component {
 
     const orientation = (this.props.orientation === 'landscape') ? "landscape" : "portrait";
 
-    // get the default color for the given device
-    let default_color = deviceColor(name);
+    // try to use the requested color
     const try_color = this.props.color;
-    const valid_color = validColor(try_color,name);
-    // figure out what color we're going to use: from props.color, a default color for the type
-    const color = (!_.isEmpty(try_color) && valid_color) ? try_color : default_color;
+    // validate the requested color. use it if valid, fallback on the default.
+    const color_hex = colorUse(name,try_color);
+    // color use returns a hex value. map it to the color name for the device.
+    const color_name = colorMap(name,color_hex);
 
     // render children if we have them, otherwise render whatever is in props.show 
     // NOTE: rendering of props.show is handled by ./devices/Content.js
@@ -350,7 +525,7 @@ export default class Device extends Component {
 
     return (
       <TheDevice
-        color={color}
+        color={color_name}
         orientation={orientation}
         show={content}
         title={this.props.title}

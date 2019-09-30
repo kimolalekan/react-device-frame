@@ -11,8 +11,11 @@ import {
   DropdownMenu,
   DropdownItem,
 } from 'reactstrap';
-
 import ReactTooltip from 'react-tooltip';
+import { GithubPicker } from 'react-color';
+import reSize from './lib/reSize';
+
+// pull in Component and utils
 import Device, {
   SUPPORTED_DEVICES,
 } from './Device';
@@ -35,6 +38,8 @@ const DEFAULTS = {
   show: {
     zoom: true,
     switcher: true,
+    color: true, 
+    orientation: true,
   }
 }
 
@@ -42,15 +47,14 @@ const DEFAULTS = {
 // to map props to viewable text, Zoom Levels provide the numeric
 // levels that each text key sets into the dom when a zoom level changes
 const ZOOM_MAP = {
-  full: '100',
-  large: '90',
-  med: '80',
-  small: '70',
-  '100': 'full',
-  '90': 'large',
-  '80': 'med',
-  '70': 'small',
+  'full': '100',
+  'large': '90',
+  'med': '80',
+  'small': '70',
 }
+// flip the zoom_map and merge the results back into the zoom_map
+// so we can access a level from a label and a label from a level
+_.set(ZOOM_MAP,_.merge(ZOOM_MAP,_.invert(ZOOM_MAP)));
 
 // the numeric levels that each text key sets into the dom when a zoom level changes
 const ZOOM_LEVELS = [
@@ -62,6 +66,13 @@ const ZOOM_LEVELS = [
 
 class Dock extends Component {
   
+  // holds refs for the drawer
+  drawerRef = {
+    container: null,
+    overlay: null,
+    content: null,
+  }
+
   // Requirements for props
   static propTypes = {
     // the device that you want to render as the initial device. Note that its possible to 
@@ -83,10 +94,9 @@ class Dock extends Component {
     }).isRequired,
     view: PropTypes.oneOf(['full','large','med','small']).isRequired,
     // a function that is called whenever the zoom level or device type is changed
-    // your function is passed an object with this shape as its only argument: 
-    // {
-    //   zoom: 90, // the currently selected zoom level. is one of 70, 80, 90, 100
-    //   device: "the-device-slug", // one of <Device/>.SUPPORTED_DEVICES
+    // your function is passed an object with this shape as it's only argument: {
+    //   @zoom {string} one of: 'full','large','med','small'. this is the currently selected zoom level.
+    //   @device {string} one of <Device/>.SUPPORTED_DEVICES, like: "the-device-slug"
     // }
     onData: PropTypes.func,
     // an array of device names that you want to remove from the list of SUPPORTED_DEVICES
@@ -95,7 +105,11 @@ class Dock extends Component {
     show: PropTypes.shape({
       zoom: PropTypes.bool,
       switcher: PropTypes.bool,
+      color: PropTypes.bool,
+      orientation: PropTypes.bool,
     }), 
+    // add padding in px to the top of the drawer. handy if you have a header at the top of your page.
+    padTop: PropTypes.number,
   }
   
   // Defaults for props
@@ -110,6 +124,7 @@ class Dock extends Component {
     onData: null,
     show: DEFAULTS.show,
     hide: [],
+    padTop: 0,
   }
 
   constructor(props){
@@ -126,12 +141,28 @@ class Dock extends Component {
     this.state = {
       // is the drawer open?
       open: false,
+
+      // @DEVICE DISPLAY SIZE
       // the zoom menu text labels
       zoom: zoom_text,
-      // the zoom level
+      // the zoom level, an integer, one of: 70, 80, 90, or 100.
       view: zoom_view,
+
+      // @PREVIEW LOCATION
       // is the preview at the right had side? false for left
       float: 'right', // this is "left" or "right"
+      
+      // @device display orientation
+      // TODO: add orientation menu
+      orient: 'landscape', // this is landscape or portrait
+
+      // @DEVICE COLORS
+      // the currently selected color
+      color: 'black',
+      // is the color chooser visible?
+      chooser: false,
+
+      // @DEVICES
       // which device are we viewing? see <Device/> -> SUPPORTED_DEVICES for supported labels
       device: props.device,
       // a list of supported devices
@@ -139,6 +170,10 @@ class Dock extends Component {
       // show or hide specific controls
       show: show_controls,
     }
+
+    this.measureDrawer = this.measureDrawer.bind(this);
+    this.chooserToggle = this.chooserToggle.bind(this);
+
   }
 
   getDrawer(){
@@ -151,42 +186,33 @@ class Dock extends Component {
     return wrapper;
   }
 
-  attachDrawerClasses(){
-    // pull the items out of state that we need to send pack to the parent
-    const {view,device,float} = this.state;
-
-    // if the drawer is open then add the current view, device and size to it
-    const drawer = this.getDrawer();
-    if (drawer !== null) {
-      this.cleanZoom(drawer);
-      this.cleanDevice(drawer);
-      this.cleanFloat(drawer);
-      drawer.classList.add(`zoom-${view}`);
-      drawer.classList.add(`device-${device}`);
-      drawer.classList.add(`at-${float}`);
-    }
+  componentDidMount() {
+    this.measureDrawer();
+    window.addEventListener("resize", this.measureDrawer);
   }
 
-  componentDidMount(){
-    this.attachDrawerClasses();
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.measureDrawer);
   }
 
   componentDidUpdate(prevProps, prevState){
     // pull the items out of state that we need to send pack to the parent
-    const {view,device,float} = this.state;
+    const {view,device,float,orient,color} = this.state;
     // if we have an onData callback defined then send it the items we've pulled out of state
     if (_.isFunction(this.props.onData)) {
       this.props.onData({
         zoom: ZOOM_MAP[view],
         device: device,
         float: float,
+        orient: orient,
+        color: color,
       });
     }
   }
 
   setFloat(to){
     this.setState({ float: to },()=>{
-      this.attachDrawerClasses();
+      this.measureDrawer();
     });
   }
 
@@ -197,7 +223,7 @@ class Dock extends Component {
 
   setZoom(to){
     this.setState({ view: to },()=>{
-      this.attachDrawerClasses();
+      this.measureDrawer();
     });
   }
 
@@ -241,7 +267,6 @@ class Dock extends Component {
 
   toggle = () => {
     const { open } = this.state;
-
     const wrapper = this.getOpenWrapper();
 
     if (open === true) {
@@ -252,13 +277,110 @@ class Dock extends Component {
     }
 
     this.setState({ open: !open },()=>{
-      this.attachDrawerClasses();
+      this.measureDrawer();
     });
+  }
+
+  applyPadding(to){
+    // pull the zoom level out of state
+    const {view} = this.state;
+    // get the un-zoomed device height
+    const device_height = _.round(this.drawerRef.overlay.getBoundingClientRect().height);
+    // get the height of the window form the reSize HOC
+    const window_height = this.props.reSize.height;
+    // output padding in px
+    const units = 'px';
+    // each close control is 30px (30.5px) tall but positioned relative so they collectively take up ≈60px
+    const fixed_pad = 60; 
+    // the amount of padding passed into the <Drawer/>
+    const props_pad = this.props.padTop;
+    // the total amount of additional padding when factoring in buttons and requested padding
+    const extra = fixed_pad + props_pad;
+    // the perceptual device height when zoomed
+    const adjusted_device_height = _.round(device_height * (view/100));
+    // the leftover height after removal of the device height from the window height
+    const oversize =  (adjusted_device_height - window_height);
+    // default to providing only the padding requested by props.padTop
+    let provide_padding = props_pad;
+    // if the perceptual size of the device is larger than the viewport then provide adjusted padding based on the
+    // zoom settings
+    if (oversize > 0) {
+      // the padding left over after factoring in the perceived height when zoom resized by {view}
+      const adjusted_padding = _.round(oversize * (view/100));
+      // the needed padding after adding in the buttons and the requested padding
+      const padding = adjusted_padding + extra;
+      // only provide additional padding if we need it because the device is taller than the window,
+      // otherwise, provide the requested padding from props.topPad + our buttons
+      provide_padding = (adjusted_device_height >= window_height ) ? padding : props_pad;        
+    }
+    // apply padding to the drawer
+    to.style.paddingTop = `${provide_padding}${units}`;
+  }
+
+  attachClasses(to){
+    // pull the items out of state that we need to attach to the drawer
+    const {view,device,float} = this.state;
+
+    this.cleanZoom(to);
+    this.cleanDevice(to);
+    this.cleanFloat(to);
+    to.classList.add(`zoom-${view}`);
+    to.classList.add(`device-${device}`);
+    to.classList.add(`at-${float}`);
+
+  }
+
+  measureDrawer(){
+    // if the drawer is open then add classes and padding to it
+    const drawer = this.getDrawer();
+    if (drawer !== null) {
+      this.applyPadding(drawer);
+      this.attachClasses(drawer);
+    }
+  }
+
+  chooserToggle(){
+    // pull out the current value of chooser from state
+    const {chooser:visible} = this.state;
+    // swap the value of visible and reset that value into state
+    this.setState({chooser: !visible});
+  }
+
+  chooseColorHover(hovered){
+    const {device} = this.state;
+    const name = Device.colorMap(device,hovered.hex);
+    console.table({
+      '@':'chooseColorHover()',
+      color: hovered.hex,
+      name: name,
+    });
+  }
+
+  chooseColorComplete(chosen){
+    const {device} = this.state;
+    const name = Device.colorMap(device,chosen.hex);
+    // set the selected color name into state
+    this.setState({color: name});
+
   }
 
   render() {
 
-    const { open } = this.state;
+    const { open, float, color } = this.state;
+
+    // all colors available for the requested device
+    const colors_available = Device.getColors(this.props.device);
+    // the default color for the requested device
+    const color_default = Device.getColor(this.props.device,{as:'name'});
+
+    const selectable = {
+      all: colors_available,
+      default: color_default,
+      use: color,
+    };
+
+    // TODO: add color selection menu per device using Device.getColors() and Device.getColor()
+    // TODO: add orientation menu for landscape/portrait
 
     const CloseButton = (props) => {
       return (
@@ -288,7 +410,6 @@ class Dock extends Component {
       );
     }
 
-
     const DeviceMenu = (props) => {
 
       return (
@@ -303,7 +424,7 @@ class Dock extends Component {
             </DropdownToggle>
             <DropdownMenu direction={props.direction}>
               {props.items.map((item, index) =>{
-                    // cleanup each name to match the proper name for the device
+                // cleanup each name to match the proper name for the device
                 const name = Device.getName(item);
                 return (
                   <DropdownItem
@@ -317,13 +438,67 @@ class Dock extends Component {
                   </DropdownItem>
                 )}
               )}
-
             </DropdownMenu>
           </UncontrolledButtonDropdown>
         </ButtonGroup>
       );
     }
 
+    const ColorSwitch = (props) => {
+      // const available = props.selections.all;
+      // const colors = colorNames(props.selections);
+      const colors = Device.colorValues(this.state.device);
+      const using = Device.colorUse(this.state.device,props.selections.use);
+      // const names = _.keys(available);
+      // const using = props.selections.use;
+      // const fallback = props.selections.default;
+      // const render_color = _.includes(names,using) ? available[using] : available[fallback];
+      const have_colors = !_.isEmpty(colors);
+      return (have_colors) ? (
+        <React.Fragment>
+          <Button 
+            color="ghost"
+            className="shadow color-chooser"
+            onClick={this.chooserToggle}
+          >
+            <i className="fa fa-circle fa-xs" style={{
+              color: using,
+              backgroundColor: using,
+            }}></i>
+          </Button>
+          { (props.visible) ? (
+          <GithubPicker 
+              className="color-chooser-choices"
+              // width="212px"
+              colors={colors}
+              color={using}
+              onChange={this.chooserToggle}
+              onChangeComplete={(color, event) => {
+                this.chooseColorComplete(color);
+              }} 
+              onSwatchHover={ (color, event) => {
+                // console.log({
+                //   'swatch':'hover!',
+                //   color:color,
+                //   event:event
+                // });
+                this.chooseColorHover(color);
+              }} 
+              triangle={(props.opens === 'left') ? "top-left" : "top-right"}
+          />
+          ) : null }
+        </React.Fragment>
+      ) : null;
+    } 
+
+    // TODO: add orientation controls
+    // const Orientation = (props) => {
+    //   return (
+    //     <React.Fragment>
+
+    //     </React.Fragment>
+    //   );
+    // } 
 
     const ZoomMenu = (props) => {
       return (
@@ -376,7 +551,6 @@ class Dock extends Component {
       );
     }
 
-    
     const OpenButton = (props) => {
       const drawer_open_class = (props.open === true) ? CLASSES.drawer_open : '';
       return (
@@ -395,6 +569,7 @@ class Dock extends Component {
               <i className="fa fa-mobile fa-lg"></i>
               {props.text}
             </Button>
+            {/* TODO: implement state.controls.switcher to show device switcher */}
             <DeviceMenu 
                 items={props.menu.items}
                 direction="down"
@@ -427,7 +602,7 @@ class Dock extends Component {
             open={open}
             text={this.props.open}
             tooltip={this.props.tooltip}
-            toggle={() => {this.toggle()}}
+            toggle={() => { this.toggle() }}
             menu={{
               items: this.state.supported,
               onChoice: (chosen) => { this.setDevice(chosen); },
@@ -439,13 +614,32 @@ class Dock extends Component {
             className="react-device-frame dock"
             open={open}
             allowClose={true}
+            // direction
             onRequestClose={this.toggle}
             inViewportChange={(at_top)=>{
               this.viewportChanged(at_top);
             }}
-            // onOpen={()=>{}}
+            onOpen={()=>{
+              this.measureDrawer();
+            }}
+            // notifyWillClose={(a)=>{console.log({'@':'notifyWillClose()','a':a})}}
+            modalElementClass="react-device-frame drawer-modal"
+            containerElementClass="react-device-frame drawer-main"
+            getContainerRef={(Ref)=>{
+              const have_ref = !_.isEmpty(Ref);
+              if(have_ref){
+                this.drawerRef['container'] = Ref;
+              }
+            }}
+            getModalRef={(Ref)=>{
+              const have_ref = !_.isEmpty(Ref);
+              if(have_ref){
+                this.drawerRef['overlay'] = Ref;
+              }
+            }}
         >
           <div className="close-control zoom-reset close-control-top">
+            {/* TODO: implement state.controls to show hide controls */}
             <FloatButton 
                 showing={this.state.float}
                 action={(to)=>this.setFloat(to)}
@@ -461,9 +655,18 @@ class Dock extends Component {
                 onChoice={(to)=>this.setZoom(to)}
                 getSelected={(type,value)=>{ return this.selected(type,value) }}
             />
+            <ColorSwitch 
+                visible={this.state.chooser} 
+                chosen={this.state.color} 
+                opens={float}
+                selections={selectable}
+            />
           </div>
-          {this.props.children}
+          <div className="react-device-frame content-main" ref={(element)=>{ this.drawerRef['content'] = element}}>
+            {this.props.children}
+          </div>
           <div className="close-control zoom-reset close-control-bottom">
+            {/* TODO: implement state.controls to show hide controls */}
             <FloatButton 
                 showing={this.state.float}
                 action={(to)=>this.setFloat(to)}
@@ -479,6 +682,12 @@ class Dock extends Component {
                 onChoice={(to)=>this.setZoom(to)}
                 getSelected={(type,value)=>{ return this.selected(type,value) }}
             />
+            <ColorSwitch 
+                visible={this.state.chooser} 
+                chosen={this.state.color} 
+                opens={float}
+                selections={selectable}
+            />
           </div>
         </Drawer>
       </React.Fragment>
@@ -486,4 +695,4 @@ class Dock extends Component {
   }
 }
 
-export default Dock;
+export default reSize(Dock);

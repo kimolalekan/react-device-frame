@@ -155,47 +155,8 @@ body.aside-menu-lg-show {
   padding: 5px 5px 6px 5px !important;
 }
 
-// position the top close control
-// Ref: zrckpye8b1
-// Link: https://perfectcube.teamwork.com/tasks/25784228
-// TODO: some of the phone frames overlap the edge position that we're placing the close button over
-// + as a default position. Add device specific nudges to make the close button always sit halfway
-// + off the edge of the active device.
-.close-control-bottom {
-  position: relative;
-  bottom: 20px;
-}
-
-// position the bottom close control
-
-// Ref: zrckpye8b1
-// Link: https://perfectcube.teamwork.com/tasks/25784228
-// TODO: some of the phone frames overlap the edge position that we're placing the close button over
-// + as a default position. Add device specific nudges to make the close button always sit halfway
-// + off the edge of the active device.
-.close-control-top {
-  position: relative;
-  bottom: -20px;
-}
-
-.close-control {
-  display: flex;
-  justify-content: center;
-  z-index: 100;
-
-  .dropdown-toggle {
-    padding: 0 0.5rem !important;
-  }
-
-}
-
-// flip the buttons around when positioned at the left hand side
-.at-left .close-control {
-  flex-direction: row-reverse;
-}
-
 // hide the zoom menu and the float button by default
-.zoom-menu, .toggle-float {
+.zoom-menu, .toggle-float, .color-chooser, .color-chooser-choices {
   opacity: 0;
   margin: 0 !important;
   -webkit-transition: opacity .1s ease-in-out;
@@ -206,14 +167,14 @@ body.aside-menu-lg-show {
 // show the top zoom menu when you're scrolled to the top of the drawer and 
 // you're hovering over the close control
 .at-top .close-control-top:hover{
-  .zoom-menu, .toggle-float {
+  .zoom-menu, .toggle-float, .color-chooser, .color-chooser-choices {
     opacity: 1;
   }
 }
 // show the bottom zoom menu when you're scrolled to the bottom of the drawer and 
 // you're hovering over the close control
 .at-bottom .close-control-bottom:hover {
-  .zoom-menu, .toggle-float {
+  .zoom-menu, .toggle-float, .color-chooser, .color-chooser-choices {
     opacity: 1;
   }
 }
@@ -237,7 +198,6 @@ body.aside-menu-lg-show {
     padding-right: 5.5rem;
     padding-left: 5.5rem;
   }
-
 
   // push the drawer all the way to the right of the window
   // TODO: allow drawer to be displayed at left?
@@ -284,48 +244,172 @@ body.aside-menu-lg-show {
   &.zoom-80{ zoom: 80%; }
   &.zoom-70{ zoom: 70%; }
 
-  &.zoom-100 {
-    // TODO: Set different paddings for the drawer based on device and zoom level
-    padding-top: 3rem;
+  // &.zoom-100 {
+  //   // TODO: Set different paddings for the drawer based on device and zoom level
+  //   // padding-top: 3rem;
 
-    &.device-iphone-8plus {
-      // padding-top: 4rem;
+  //   &.device-iphone-8plus {
+  //     // padding-top: 4rem;
+  //   }
+
+  //   &.device-galaxy-note8 {
+  //     // padding-top: 4rem;
+  //   }
+
+  //   &.device-iphone-5s {
+  //     // padding-top: 10px;
+  //   }
+
+  //   &.device-iphone-4s {
+  //     // padding-top: 55px;
+  //   }
+
+  //   &.device-htc-one{
+  //     // padding-top: 55px;
+  //   }
+
+  //   &.device-galaxy-s5{
+  //     // padding-top: 55px;
+  //   }
+
+  // }
+
+  // &.zoom-90 {
+  //   // TODO: Set different paddings for the drawer based on device and zoom level
+  //   padding-top: 60px;
+  //   &.device-iphone-8plus{
+  //     padding-top: 120px;
+  //   }
+  // }
+
+  // &.device-nexus-5,
+  // &.device-lumia-920{
+  //   // padding-top: 0px !important;
+  // }
+
+  // position the top close control
+  // Ref: zrckpye8b1
+  // Link: https://perfectcube.teamwork.com/tasks/25784228
+  // TODO: some of the phone frames overlap the edge position that we're placing the close button over
+  // + as a default position. Add device specific nudges to make the close button always sit halfway
+  // + off the edge of the active device.
+  .close-control-bottom {
+    position: relative;
+    bottom: 20px;
+  }
+
+  // position the bottom close control
+
+  // Ref: zrckpye8b1
+  // Link: https://perfectcube.teamwork.com/tasks/25784228
+  // TODO: some of the phone frames overlap the edge position that we're placing the close button over
+  // + as a default position. Add device specific nudges to make the close button always sit halfway
+  // + off the edge of the active device.
+  .close-control-top {
+    position: relative;
+    bottom: -20px;
+  }
+
+  .close-control {
+    display: flex;
+    justify-content: center;
+    z-index: 100;
+
+    .dropdown-toggle {
+      padding: 0 0.5rem !important;
     }
 
-    &.device-galaxy-note8 {
-      // padding-top: 4rem;
+    // float the color chooser on the right as a small dot for the button
+    .color-chooser {
+      position: absolute;
+      padding: 0.22rem 0.35rem 0.35rem 0.4rem;
+      // border: 1px solid red;
+      border-radius: 50%;
+      align-self: center;
+      top: 0.15rem;
+
+      i {
+        border: 1px solid black;
+        border-radius: 50%;
+
+        &:before {
+          display: inline-block;
+          width: 1rem;
+          height: 1rem;
+        }
+      }
     }
 
-    &.device-iphone-5s {
-      // padding-top: 10px;
-    }
+    .color-chooser-choices {
+      position: absolute !important;
+      // overwrite the default width of 100px with auto sizing based on the number of colors
+      width: auto !important;
+      // make sure the chooser appears above the close button
+      z-index: 105;
 
-    &.device-iphone-4s {
-      // padding-top: 55px;
-    }
+      > div {
+        top: 10px !important;
+      }
 
-    &.device-htc-one{
-      // padding-top: 55px;
-    }
+      > div:first-of-type {
+        border-style: hidden !important;
+      }
 
-    &.device-galaxy-s5{
-      // padding-top: 55px;
     }
 
   }
 
-  &.zoom-90 {
-    // TODO: Set different paddings for the drawer based on device and zoom level
-    padding-top: 60px;
-    &.device-iphone-8plus{
-      padding-top: 120px;
+  &.at-right .close-control {
+
+    // position the color chooser on the right as a small dot for the button
+    .color-chooser {
+      right: 0;
     }
+
+    .color-chooser-choices {
+      // vertically center the color chooser choices with the drawer close button
+      right: 30px;
+      top: -4px;
+      // point the carrot right
+      > div {
+        transform: rotate(90deg);
+        right: -14px !important;
+      }
+    }
+
   }
 
-  &.device-nexus-5,
-  &.device-lumia-920{
-    // padding-top: 0px !important;
+  // flip the buttons around when positioned at the left hand side
+  &.at-left .close-control {
+    flex-direction: row-reverse;
+    // position color chooser on the left when preview is on the left
+    .color-chooser {
+      left: 0;
+    }
+
+    .color-chooser-choices {
+      // vertically center the color chooser choices with the drawer close button
+      left: 30px;
+      top: -4px;
+      // point the carrot left 
+      > div {
+        transform: rotate(-90deg);
+        left: -14px !important;
+      }
+    }
+
   }
+
+  // when the device drawer is positioned on the left hand side flip the scrollbar — within the 
+  // drawer area only
+  // &.at-left {
+  //   // flip the scrollbar location
+  //   direction: rtl;
+  //   // reset the direction of everything below the scrollbar container
+  //   .react-device-frame.drawer-modal {
+  //     direction: ltr;
+  //   }
+  // }
 
 }
 

@@ -38,6 +38,7 @@
   "dependencies": {
     "Devices.css": "https://github.com/perfectcube/devices.css",
     "lodash.merge": "^4.6.2",
+    "react-color": "^2.17.3",
     "react-drag-drawer": "^3.3.1",
     "react-tooltip": "^3.11.1"
   }
