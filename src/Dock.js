@@ -84,6 +84,7 @@ class Dock extends Component {
     show: DEFAULTS.show,
     hide: [],
     padTop: 0,
+    orient: 'portrait',
   }
 
   constructor(props){
@@ -113,7 +114,7 @@ class Dock extends Component {
       
       // @device display orientation
       // TODO: add orientation menu
-      orient: 'landscape', // this is landscape or portrait
+      orient: props.orient, // this is landscape or portrait
 
       // @DEVICE COLORS
       // the currently selected color
