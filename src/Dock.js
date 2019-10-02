@@ -406,14 +406,8 @@ class Dock extends Component {
     }
 
     const ColorSwitch = (props) => {
-      // const available = props.selections.all;
-      // const colors = colorNames(props.selections);
       const colors = Device.colorValues(this.state.device);
       const using = Device.colorUse(this.state.device,props.selections.use);
-      // const names = _.keys(available);
-      // const using = props.selections.use;
-      // const fallback = props.selections.default;
-      // const render_color = _.includes(names,using) ? available[using] : available[fallback];
       const have_colors = !_.isEmpty(colors);
       return (have_colors) ? (
         <React.Fragment>
