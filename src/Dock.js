@@ -339,7 +339,6 @@ class Dock extends Component {
       use: color,
     };
 
-    // TODO: add color selection menu per device using Device.getColors() and Device.getColor()
     // TODO: add orientation menu for landscape/portrait
 
     const CloseButton = (props) => {
