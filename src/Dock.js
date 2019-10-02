@@ -306,15 +306,17 @@ class Dock extends Component {
     this.setState({chooser: !visible});
   }
 
-  chooseColorHover(hovered){
-    const {device} = this.state;
-    const name = Device.colorMap(device,hovered.hex);
-    console.table({
-      '@':'chooseColorHover()',
-      color: hovered.hex,
-      name: name,
-    });
-  }
+  // callback for react-color-picker. triggered while hovering over color swatches
+  // NOTE: left in for documentation purposes 
+  // chooseColorHover(hovered){
+  //   const {device} = this.state;
+  //   const name = Device.colorMap(device,hovered.hex);
+  //   console.table({
+  //     '@':'chooseColorHover()',
+  //     color: hovered.hex,
+  //     name: name,
+  //   });
+  // }
 
   chooseColorComplete(chosen){
     const {device} = this.state;
@@ -435,14 +437,15 @@ class Dock extends Component {
               onChangeComplete={(color, event) => {
                 this.chooseColorComplete(color);
               }} 
-              onSwatchHover={ (color, event) => {
-                // console.log({
-                //   'swatch':'hover!',
-                //   color:color,
-                //   event:event
-                // });
-                this.chooseColorHover(color);
-              }} 
+              // NOTE: left in for documentation purposes 
+              // onSwatchHover={ (color, event) => {
+              //   // console.log({
+              //   //   'swatch':'hover!',
+              //   //   color:color,
+              //   //   event:event
+              //   // });
+              //   this.chooseColorHover(color);
+              // }} 
               triangle={(props.opens === 'left') ? "top-left" : "top-right"}
           />
           ) : null }
