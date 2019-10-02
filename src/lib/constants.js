@@ -19,6 +19,7 @@ const DEFAULTS = {
     switcher: true,
     color: true, 
     orientation: true,
+    float: true,
   }
 }
 

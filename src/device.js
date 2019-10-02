@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from 'lodash';
-import Props from './devices/lib/Props';
 
+// import all supported components
 import Iphonex from "./devices/iphonex";
 import Iphone8 from "./devices/iphone8";
 import Iphone8plus from "./devices/iphone8plus";
@@ -17,10 +17,20 @@ import Galaxynote8 from "./devices/galaxynote8";
 import Htcone from "./devices/htcone";
 import Lumia920 from "./devices/lumia920";
 
+// grab all props for all devices
+import Props from './devices/lib/Props';
+
+// grab our local styles
 import './scss/Device.scss';
+
+// grab the styles from node_modules/Devices.css
 import 'Devices.css/assets/devices.min.css';
 
-
+/**
+ * used by normalize to squash values in arrays and objects to lowercase
+ * @param {object|array} set an array or single level deep hash
+ * @returns your set with lowercase values in it
+ */
 const toLower = (set) => {
   let processed = null;
   const type = (_.isArray(set)) ? 'array' : 'object';
@@ -37,8 +47,8 @@ const toLower = (set) => {
     case 'object':
     default:
       processed = {};
-      _.each(set,(hex,name)=>{
-        const lower = _.toLower(hex);
+      _.each(set,(value,name)=>{
+        const lower = _.toLower(value);
         _.set(processed,name,lower);
       });
     break;
@@ -46,7 +56,10 @@ const toLower = (set) => {
   return processed;
 }
 
-// post processes device data to normalize specific information within the set
+/**
+ * Post processes device data to normalize specific information within the set
+ * @param {DEVICES} source our device dataset/constant
+ */
 const normalize = (source) => {
   // iterate over the source and alter whatever is necessary in each device
   _.each(source,(data,name) => {
@@ -60,6 +73,9 @@ const normalize = (source) => {
   return source;
 }
 
+// our "database" of supported devices; adds metadata for each device and attaches the 
+// imported components to an object key that we can use later to pull in the device that we're 
+// going to render
 const DEVICES = normalize({
   'galaxy-note8':{
     meta: {
@@ -215,7 +231,11 @@ const DEVICES = normalize({
   },
 });
 
-// fills a convenience constant -> DEVICE_META
+/**
+ * Pulls our metadata from our device dataset DEVICES. Used to fill a convenience constant -> DEVICE_META
+ * @param {DEVICES} from the device dataset 
+ * @returns {object} a hash of {device-type:{metadata}} pairs
+ */
 const fillMeta = (from) => {
   const metadata = {};
   _.each(from,(device,name)=>{
@@ -225,6 +245,11 @@ const fillMeta = (from) => {
   return metadata;
 }
 
+/**
+ * Creates human readable names from device type keys. see: DEVICES->object-keys
+ * @param {string} type a valid device type
+ * @returns {string} a human readable name for the device
+ */
 const deviceName = (type) => {
   let name = _.startCase(type);
   name = name.replace('Iphone','iPhone');
@@ -290,6 +315,7 @@ const deviceColor = (type,format='object') => {
   }
   return color;
 }
+
 /**
  * From a given {value} lookup it's key, or from a given key lookup it's {value} in the device's available colors. For
  * example if a deice supports the color {'red':'#f96b6c'} and you pass in "red" you'll get back '#f96b6c' or if you 
@@ -316,18 +342,35 @@ const colorMap = (type,value) => {
   return found;
 }
 
+/**
+ * Gets all supported color names for the device {type}
+ * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+ * @returns {array} an array of supported human readable color names for the device {type}
+ */
 const colorNames = (type) => {
   const available = deviceColors(type);
   const names = _.keys(available);
   return names;
 }
 
+/**
+ * Gets all supported #hex color values for the device {type}
+ * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+ * @returns {array} an array of supported #hex color values for the device {type}
+ */
 const colorValues = (type) => {
   const available = deviceColors(type);
   const values = _.values(available);
   return values;
 }
 
+/**
+ * Validates {using} against the device {type} and uses the default color for the device if {using} isn't a supported color
+ * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+ * @param {string} using a human readable color name, like "red". 
+ * @returns {string|null} returns the color you passed in through {using} if valid, the default color for the device {type}, or null
+ *                        if the device doesn't have a default color 
+ */
 const colorUse = (type,using) => {
   const available = deviceColors(type);
   const fallback = deviceColor(type,'name');
@@ -341,7 +384,7 @@ const colorUse = (type,using) => {
 /**
  * Pass in a valid device type-name and get back an array of info-* points mined from the device metadata.
  * @param {string} type a valid device type
- * @returns {array} an array of calculated infos on the device
+ * @returns {array} an array of calculated information about the device
  */
 const deviceStats = (type) => {
   const stats = [];
@@ -358,10 +401,11 @@ const deviceStats = (type) => {
   return stats;
 }
 
+// a hash of {device-type:{metadata}} objects
 export const DEVICE_META = fillMeta(DEVICES);
-
+// an array of supported devices
 export const SUPPORTED_DEVICES = _.keys(DEVICES);
-
+// the default device. this is used if an invalid device is passed in through props.use
 const DEFAULT_DEVICE = 'iphone-x';
 
 export default class Device extends Component {
@@ -402,6 +446,7 @@ export default class Device extends Component {
 
   /**
    * Get a list of all supported devices as keys and each devices metadata as values
+   * @returns {object} a hash of {device-type:{metadata}} objects
    */
   static getDevices() {
     const devices = {};
@@ -462,15 +507,22 @@ export default class Device extends Component {
     return valid;
   }
 
+  /**
+   * Validates {using} against the device {type} and uses the default color for the device if {using} isn't a supported color
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @param {string} using a human readable color name, like "red". 
+   * @returns {string|null} returns the color you passed in through {using} if valid, the default color for the device {type}, or null
+   *                        if the device doesn't have a default color 
+   */
   static colorUse(type,using){
     const choose = colorUse(type,using);
     return choose;
   }
 
   /**
-   * Get all available color names for a given device type
-   * @param {type} type 
-   * @returns {array}
+   * Gets all supported color names for the device {type}
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @returns {array} an array of supported human readable color names for the device {type}
    */
   static colorNames(type){
     const colors = colorNames(type);
@@ -478,9 +530,9 @@ export default class Device extends Component {
   }
 
   /**
-   * get all available color values for a given device type
-   * @param {string} type 
-   * @returns {array}
+   * Gets all supported #hex color values for the device {type}
+   * @param {string} type a valid device type. use Device.getDevices() to see all devices and metadata for each device.
+   * @returns {array} an array of supported #hex color values for the device {type}
    */
   static colorValues(type){
     const colors = colorValues(type);
@@ -549,9 +601,7 @@ export default class Device extends Component {
       console.warn(message);
       device = this.createDevice(DEFAULT_DEVICE);
     }
-
     return device; 
-
   }
 
   render() {

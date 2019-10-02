@@ -1,3 +1,5 @@
+$close-button--base-margin: 0 .5rem;
+
 // common button style inside or outside the drawer
 button.toggle {
 
@@ -11,8 +13,10 @@ button.toggle {
   
 }
 
+
 #react-device-frame-drawer__controls {
-  // make sure the drawer appear above the feature preview blur <Dimmer/> 
+  // make sure the drawer appear above the feature preview blur <Dimmer/>. 
+  // TODO: this is a project local hack that doesn't belong in <Dock/>. Move it to <Preview/>
   z-index: 1005;
   position: fixed;
   top: 5.5rem;
@@ -47,6 +51,22 @@ button.toggle {
   // see &:hover, below. this fixes a bug where the area collapses with the menu still open
   .dropdown-menu {
     opacity: 0;
+  }
+
+  // when there is no device menu present keep the open button stationary 
+  // instead of moving the button onto the screen when you hover over the 
+  // open controls region
+  &.no-device-menu {
+    right: -4rem;
+    .toggle-open {
+      padding-right: 1.6rem;
+    }
+    &:hover {
+      right: -4rem;
+      .toggle-open {
+        padding-right: 1.6rem;
+      }
+    }
   }
 
   &:hover {
@@ -97,7 +117,7 @@ body.aside-menu-lg-show {
     }
     // sizing of the "•"
     .dropdown-item i:before {
-      font-size: 4px;
+      font-size: 5px;
     }
 
   }
@@ -107,6 +127,63 @@ body.aside-menu-lg-show {
   }
 
 }
+
+// handle situations when controls are hidden
+#react-device-frame-drawer {
+  
+  &.at-right {
+    .close-control {
+      // if there is no float control then push the close button over so it still centers 
+      // inside the device frame
+      &.controls--no-float {
+        .toggle-close {
+          margin-left: 3rem !important;
+        }
+      }
+      // if there is no zoom control then push the close button over so it still centers 
+      // inside the device frame
+      &.controls--no-zoom {
+        .toggle-close {
+          margin-right: 3rem !important;
+        }
+      }
+    } 
+  }
+
+  &.at-left {
+      // if there is no float control then push the close button over so it still centers 
+      // inside the device frame
+    .close-control {
+      &.controls--no-float {
+        .toggle-close {
+          margin-right: 3rem !important;
+        }
+      }
+      // if there is no zoom control then push the close button over so it still centers 
+      // inside the device frame    
+      &.controls--no-zoom {
+        .toggle-close {
+          margin-left: 3rem !important;
+        }
+      }
+    }
+  }
+
+  &.at-left, &.at-right {
+    .close-control {
+      // when no zoom control, and no float control,  revert to the original value
+      // TODO: put this value in a variable so we can wiggle if necessary
+      &.controls--no-zoom.controls--no-float { 
+        .toggle-close {
+          margin: $close-button--base-margin !important;
+        }
+      }
+    }
+  }
+
+}
+
+
 
 // within the zoom reset class bump the zoom up to reset to the original value before the 
 // zoom in the ancestor node was applied. this keeps the close button sizing consistent 
@@ -204,7 +281,7 @@ body.aside-menu-lg-show {
   margin-left: auto;
 
   button.toggle-close {
-    margin: 0 .5rem;
+    margin: $close-button--base-margin;
     // hide the lower close button until .at-bottom is also set, see &.at-bottom
     &.toggle-bottom {
       z-index: 105;
