@@ -20,7 +20,7 @@ button.toggle {
   z-index: 1005;
   position: fixed;
   top: 5.5rem;
-  right: -6.8rem;
+  right: -5.4rem;
   opacity: 1;
   padding-right: 3rem;
 
@@ -40,16 +40,14 @@ button.toggle {
 
   // position the open button most of the way off the screen until you hover over it, see &:hover, below.
   .toggle-open {
-    // FIXME: this, in combination with #react-device-frame-drawer__controls:hover{ .toggle-open { padding-right: 1.2rem; } }
-    // | causes the button to jiggle wildly when you place the mouse over the left hand edge of the open button. 
-    // | if this changes note that #react-device-frame-drawer__controls:hover{ right: -2rem } and 
-    // | #react-device-frame-drawer__controls { right: -6.8rem } will also need to be adjusted
-    padding-right: 1.5rem;
+    padding-right: 1.3rem;
+    padding-left: 1.1rem;
+    border-radius: 10em 0 0 10em;
   }
 
   // hide the device selection menu until you're hovering over the #react-device-frame-drawer__controls, 
   // see &:hover, below. this fixes a bug where the area collapses with the menu still open
-  .dropdown-menu {
+  .dropdown .menu {
     opacity: 0;
   }
 
@@ -78,11 +76,16 @@ button.toggle {
     right: -2rem;
     // remove the extra padding from the right hand side of the button when you're hovering in the controls area
     .toggle-open {
-      padding-right: 1.2rem;
+      -webkit-transition: border-radius .4s ease-in-out;
+      -moz-transition: border-radius .4s ease-in-out;
+      -o-transition: border-radius .4s ease-in-out;
+      transition: border-radius .4s ease-in-out;
+      // padding-right: 1.2rem;
+      border-radius: 10em;
     } 
     // show the dropdown menu when you're hovering within the controls area. this fixes a bug where
     // the area collapses with the menu still open
-    .dropdown-menu {
+    .dropdown .menu {
       opacity: 1;
     } 
   }
@@ -102,22 +105,31 @@ body.aside-menu-lg-show {
 }
 
 #react-device-frame-drawer__controls, #react-device-frame-drawer {
+
   // create a small "•" before each selected menu item on all
-  .dropdown-menu {  
-    
-    // spacing and color of the "•"
-    .dropdown-item i {
-      width: 5px;
-      margin-right: 5px;
-      margin-left: -10px;
-      position: relative;
-      bottom: 3px;
-      color: #000000;
-      text-align: center;
+  .dropdown {
+    // don't show the dropdown text
+    div.text {
+      display: none !important;
     }
-    // sizing of the "•"
-    .dropdown-item i:before {
-      font-size: 5px;
+
+    .menu {  
+      
+      // spacing and color of the "•"
+      .item i {
+        width: 5px;
+        margin-right: 5px;
+        margin-left: -10px;
+        position: relative;
+        bottom: 3px;
+        color: #000000;
+        text-align: center;
+      }
+      // sizing of the "•"
+      .item i:before {
+        font-size: 5px;
+      }
+
     }
 
   }
@@ -172,7 +184,6 @@ body.aside-menu-lg-show {
   &.at-left, &.at-right {
     .close-control {
       // when no zoom control, and no float control,  revert to the original value
-      // TODO: put this value in a variable so we can wiggle if necessary
       &.controls--no-zoom.controls--no-float { 
         .toggle-close {
           margin: $close-button--base-margin !important;
@@ -183,10 +194,13 @@ body.aside-menu-lg-show {
 
 }
 
-
+.shadow{
+  // put a sexy dropshadow under whatever we want to
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19) !important;
+}
 
 // within the zoom reset class bump the zoom up to reset to the original value before the 
-// zoom in the ancestor node was applied. this keeps the close button sizing consistent 
+// zoom in the ancestor node was applied. this keeps the close button sizing consistent~ish
 // regardless of zoom level. 
 .zoom-100 { .zoom-reset { zoom: 100%; } }
  .zoom-90 { .zoom-reset { zoom: 110%; } }
@@ -194,52 +208,27 @@ body.aside-menu-lg-show {
  .zoom-70 { .zoom-reset { zoom: 130%; } }
 
 
-// reposition zoom menu based on zoom level and selected device
-.zoom-100 {
-  // realign the dropdown items when menu is ar right hand side
-  &.at-right .dropdown-menu {
-    left: -7rem !important;
-  }
-
-}
-
-.zoom-90 { 
-  // realign the dropdown items when menu is ar right hand side
-  &.at-right .dropdown-menu {
-    left: -7rem !important;
-  }
-}
-
-.zoom-80 {
-  // set menu offset to fix problem of menu open position misalignment
-  // when zoom is set to 80%
-  &.at-right .dropdown-menu {
-    left: -9.3rem !important;
-  }
-}
-
-.zoom-70 {
-  // set menu offset to fix problem of menu open position misalignment
-  // when zoom is set to 70%
-  &.at-right .dropdown-menu {
-    left: -10rem !important;
-  }
-}
-
-
 // pad out the dropdown toggle button for the device menu
-.device-menu .dropdown-toggle {
-  padding: 5px 5px 6px 5px !important;
+.device-menu {
+  padding: 0.5rem;
+  // move the menu button inline with the close button
+  top: -1px;
+
+  // remove default margin from the sem-ui icon
+  i.setting.icon {
+    margin: 0;
+  }
+  
 }
 
 // hide the zoom menu and the float button by default
 .zoom-menu, .toggle-float, .color-chooser, .color-chooser-choices {
   opacity: 0;
   margin: 0 !important;
-  -webkit-transition: opacity .1s ease-in-out;
-  -moz-transition: opacity .1s ease-in-out;
-  -o-transition: opacity .1s ease-in-out;
-  transition: opacity .1s ease-in-out;
+  -webkit-transition: opacity .3s ease-in-out;
+  -moz-transition: opacity .3s ease-in-out;
+  -o-transition: opacity .3s ease-in-out;
+  transition: opacity .3s ease-in-out;
 }
 // show the top zoom menu when you're scrolled to the top of the drawer and 
 // you're hovering over the close control
@@ -277,11 +266,12 @@ body.aside-menu-lg-show {
   }
 
   // push the drawer all the way to the right of the window
-  // TODO: allow drawer to be displayed at left?
   margin-left: auto;
 
   button.toggle-close {
     margin: $close-button--base-margin;
+    // shave off some of the default padding from sem-ui
+    padding-left: 3.2rem !important;
     // hide the lower close button until .at-bottom is also set, see &.at-bottom
     &.toggle-bottom {
       z-index: 105;
@@ -291,9 +281,40 @@ body.aside-menu-lg-show {
   }
 
   // control size, default visibility, and shape of the float position button
-  button.toggle-float {
-    padding: 0px 4px 0px 7px;
+  button.circle {
+    padding: 0.4rem 0.5rem;
+    height: 2rem;
+    align-self: center;
+    // override default margin fir <i> from sem-ui
+    i {
+      // nudge the float button icon into the button center
+      margin: 0.15rem 0 0 0;
+    }
+
   }
+
+  .zoom-menu.dropdown {
+    button.circle {
+      margin-top: 0.2rem !important;
+    }
+
+    .dropdown.icon{
+      display: none;
+    }
+
+    .menu {
+      left: -2rem !important;
+    }
+
+  }
+
+  &.at-bottom {
+    // fix positioning of carrot when zoom menu is positioned at the bottom of the device
+    .zoom-menu.pointing.dropdown > .menu:after {
+      left: 44%;
+    }
+  }
+
 
   // control fade in/out of top vs. bottom button based on where user is scrolled to
   &.at-bottom{
@@ -321,49 +342,6 @@ body.aside-menu-lg-show {
   &.zoom-80{ zoom: 80%; }
   &.zoom-70{ zoom: 70%; }
 
-  // &.zoom-100 {
-  //   // TODO: Set different paddings for the drawer based on device and zoom level
-  //   // padding-top: 3rem;
-
-  //   &.device-iphone-8plus {
-  //     // padding-top: 4rem;
-  //   }
-
-  //   &.device-galaxy-note8 {
-  //     // padding-top: 4rem;
-  //   }
-
-  //   &.device-iphone-5s {
-  //     // padding-top: 10px;
-  //   }
-
-  //   &.device-iphone-4s {
-  //     // padding-top: 55px;
-  //   }
-
-  //   &.device-htc-one{
-  //     // padding-top: 55px;
-  //   }
-
-  //   &.device-galaxy-s5{
-  //     // padding-top: 55px;
-  //   }
-
-  // }
-
-  // &.zoom-90 {
-  //   // TODO: Set different paddings for the drawer based on device and zoom level
-  //   padding-top: 60px;
-  //   &.device-iphone-8plus{
-  //     padding-top: 120px;
-  //   }
-  // }
-
-  // &.device-nexus-5,
-  // &.device-lumia-920{
-  //   // padding-top: 0px !important;
-  // }
-
   // position the top close control
   // Ref: zrckpye8b1
   // Link: https://perfectcube.teamwork.com/tasks/25784228
@@ -373,6 +351,12 @@ body.aside-menu-lg-show {
   .close-control-bottom {
     position: relative;
     bottom: 20px;
+    //   &.device-iphone-8plus {}
+    //   &.device-galaxy-note8 {}
+    //   &.device-iphone-5s {}
+    //   &.device-iphone-4s {}
+    //   &.device-htc-one{}
+    //   &.device-galaxy-s5{}
   }
 
   // position the bottom close control
@@ -385,6 +369,12 @@ body.aside-menu-lg-show {
   .close-control-top {
     position: relative;
     bottom: -20px;
+    //   &.device-iphone-8plus {}
+    //   &.device-galaxy-note8 {}
+    //   &.device-iphone-5s {}
+    //   &.device-iphone-4s {}
+    //   &.device-htc-one{}
+    //   &.device-galaxy-s5{}
   }
 
   .close-control {
@@ -399,7 +389,7 @@ body.aside-menu-lg-show {
     // float the color chooser on the right as a small dot for the button
     .color-chooser {
       position: absolute;
-      padding: 0.22rem 0.35rem 0.35rem 0.4rem;
+      padding: 0.2rem;
       // border: 1px solid red;
       border-radius: 50%;
       align-self: center;

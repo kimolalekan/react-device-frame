@@ -4,24 +4,21 @@ import Drawer from 'react-drag-drawer';
 import _ from 'lodash';
 import {
   Button,
-  ButtonGroup, 
-  // ButtonDropdown,
-  UncontrolledButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap';
+  Dropdown,
+  Icon,
+} from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 import ReactTooltip from 'react-tooltip';
 import { GithubPicker } from 'react-color';
 import reSize from './lib/reSize';
-
+import diff from './lib/diff'
 // pull in Component and utils
 import Device, {
   SUPPORTED_DEVICES,
 } from './Device';
 import './scss/Dock.scss';
 
-import {CLASSES,DEFAULTS,ZOOM_MAP,ZOOM_LEVELS} from './lib/constants';
+import {CLASSES,DEFAULTS,ZOOM_MAP,ZOOM_LEVELS,ZOOMABLE} from './lib/constants';
 
 class Dock extends Component {
   
@@ -163,18 +160,25 @@ class Dock extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    // pull the items out of state that we need to send pack to the parent
-    const {view,device,float,orient,color} = this.state;
-    // if we have an onData callback defined then send it the items we've pulled out of state
-    if (_.isFunction(this.props.onData)) {
-      this.props.onData({
-        zoom: ZOOM_MAP[view],
-        device: device,
-        float: float,
-        orient: orient,
-        color: color,
-      });
+    // figure out if state changed
+    const state_changes = diff(this.state,prevState);
+    const state_changed = !_.isEmpty(state_changes);
+    // if state did change then pass the change back through props.onData
+    if (state_changed) {
+      // pull the items out of state that we need to send pack to the parent
+      const {view,device,float,orient,color} = this.state;
+      // if we have an onData callback defined then send it the items we've pulled out of state
+      if (_.isFunction(this.props.onData)) {
+        this.props.onData({
+          zoom: ZOOM_MAP[view],
+          device: device,
+          float: float,
+          orient: orient,
+          color: color,
+        });
+      }
     }
+    
   }
 
   setFloat(to){
@@ -228,7 +232,7 @@ class Dock extends Component {
 
   // type selects a state key, one of 'device' or 'view'
   selected(type,select){
-    const icon = (select === this.state[type]) ? (<i className="fa fa-circle fa-xs"></i>) : null;        
+    const icon = (select === this.state[type]) ? (<Icon name="circle" size='mini' />) : null;        
     return icon;
   }
 
@@ -370,13 +374,59 @@ class Dock extends Component {
     const CloseButton = (props) => {
       return (
         <Button 
-            color="primary" 
-            className={`btn-pill toggle toggle-close shadow ${props.classes}`} 
+            labelPosition="left"
+            icon
+            // TODO: allow configurable button colors. see: https://react.semantic-ui.com/elements/button/#variations-colored
+            color="blue" 
+            size="small"
+            circular
+            className={`toggle toggle-close shadow ${props.classes}`} 
             onClick={()=>props.action()}
         >
-          <i className="fa fa-close fa-lg"></i>
+          <Icon inverted name="close" />
           {props.text}
         </Button>
+      );
+    }
+
+    const ZoomMenu = (props) => {
+      
+      const items = _.map(ZOOMABLE,(value,human) => {
+        const item = (
+          <Dropdown.Item
+            key={value}
+            onClick={(Event)=>{ 
+                props.onChoice(value); 
+            }}
+          >
+            {props.getSelected('view',value)}{props.text[human]}
+          </Dropdown.Item>
+        );
+        return item;
+      });
+
+      const trigger = (
+        <Button 
+          // TODO: allow configurable button colors. see: https://react.semantic-ui.com/elements/button/#variations-colored
+          // color="gray" 
+          circular
+          className="circle shadow"
+          // onClick={()=>{ props.action(next); }}
+        >
+          <Icon name="setting" />
+        </Button>
+      );
+
+      return (
+        <Dropdown 
+            compact
+            pointing
+            floating
+            trigger={trigger}
+            className="zoom-menu"
+        >
+          <Dropdown.Menu>{items}</Dropdown.Menu>
+        </Dropdown>
       );
     }
 
@@ -386,46 +436,45 @@ class Dock extends Component {
       const next = (props.showing === 'right') ? 'left' : 'right';
       return (
         <Button 
-            color="secondary" 
-            className="btn-pill toggle toggle-float shadow"
+            // TODO: allow configurable button colors. see: https://react.semantic-ui.com/elements/button/#variations-colored
+            // color="grey" 
+            circular
+            className="toggle toggle-float circle shadow"
             onClick={()=>{ props.action(next); }}
         >
-          <i className={`fa fa-arrow-circle-${next} fa-lg`}></i>
+          <Icon name={`arrow circle ${next}`} />
         </Button>
       );
     }
 
     const DeviceMenu = (props) => {
-
+      
       return (
-        <ButtonGroup className="ml-2 device-menu shadow">
-          <UncontrolledButtonDropdown>
-            <DropdownToggle 
-                caret 
-                className="p-0" 
-                color="secondary"
-            >
-              <i className="icon-settings"></i>
-            </DropdownToggle>
-            <DropdownMenu direction={props.direction}>
-              {props.items.map((item, index) =>{
-                // cleanup each name to match the proper name for the device
-                const name = Device.getName(item);
-                return (
-                  <DropdownItem
-                      key={index} 
-                      className="btn-primary" 
-                      onClick={(Event)=>{ 
-                        props.onChoice(item); 
-                      }}
-                  >
-                    {props.getSelected('device',item)}{name}
-                  </DropdownItem>
-                )}
-              )}
-            </DropdownMenu>
-          </UncontrolledButtonDropdown>
-        </ButtonGroup>
+        <Dropdown 
+            icon="setting" 
+            text="Choose Device" 
+            pointing="right" 
+            className="device-menu shadow"
+        >
+          <Dropdown.Menu>
+          {props.items.map((item, index) =>{
+            // cleanup each name to match the proper name for the device
+            const name = Device.getName(item);
+            return (
+              <Dropdown.Item
+                  key={index} 
+                  className="" 
+                  onClick={(Event)=>{ 
+                    props.onChoice(item); 
+                  }}
+                  direction='right'
+              >
+                {props.getSelected('device',item)}{name}
+              </Dropdown.Item>
+            )}
+          )}
+          </Dropdown.Menu>
+        </Dropdown>
       );
     }
 
@@ -436,9 +485,9 @@ class Dock extends Component {
       return (have_colors) ? (
         <React.Fragment>
           <Button 
-            color="ghost"
+            basic 
             className="shadow color-chooser"
-            onClick={this.chooserToggle}
+            onClick={(Event)=>this.chooserToggle(Event)}
           >
             <i className="fa fa-circle fa-xs" style={{
               color: using,
@@ -451,9 +500,9 @@ class Dock extends Component {
               // width="212px"
               colors={colors}
               color={using}
-              onChange={this.chooserToggle}
-              onChangeComplete={(color, event) => {
-                this.chooseColorComplete(color);
+              onChange={(Color) => this.chooserToggle(Color)}
+              onChangeComplete={(Color, Event) => {
+                this.chooseColorComplete(Color);
               }} 
               // NOTE: left in because we might add hover effects on the 
               // * device color switcher 
@@ -481,57 +530,6 @@ class Dock extends Component {
     //   );
     // } 
 
-    const ZoomMenu = (props) => {
-      return (
-        <ButtonGroup className={`ml-2 zoom-menu shadow open-${props.direction}`}>
-          <UncontrolledButtonDropdown>
-            <DropdownToggle 
-                caret 
-                className="p-0" 
-                color="secondary"
-            >
-              <i className="icon-settings"></i>
-            </DropdownToggle>
-            <DropdownMenu direction={props.direction}>
-              <DropdownItem 
-                  className="btn-primary" 
-                  onClick={(Event)=>{ 
-                    props.onChoice('100'); 
-                  }}
-              >
-                {props.getSelected('view','100')}{props.text.full}
-              </DropdownItem>
-              <DropdownItem 
-                  className="btn-primary" 
-                  onClick={(Event)=>{ 
-                    props.onChoice('90');
-                  }}
-              >
-                {props.getSelected('view','90')}{props.text.large}
-              </DropdownItem>
-              <DropdownItem 
-                  className="btn-primary" 
-                  onClick={(Event)=>{ 
-                    props.onChoice('80');
-                  }}
-              >
-                {props.getSelected('view','80')}{props.text.med}
-              </DropdownItem>
-              <DropdownItem 
-                  className="btn-primary" 
-                  onClick={(Event)=>{ 
-                    props.onChoice('70');
-                  }}
-              >
-                {props.getSelected('view','70')}{props.text.small}
-              </DropdownItem>
-
-            </DropdownMenu>
-          </UncontrolledButtonDropdown>
-        </ButtonGroup>
-      );
-    }
-
     const OpenButton = (props) => {
       const drawer_open_class = (props.open === true) ? CLASSES.drawer_open : '';
       const switcher_class = (props.switcher === true) ? 'with-device-menu' : 'no-device-menu';
@@ -539,7 +537,10 @@ class Dock extends Component {
         <div id="react-device-frame-drawer__controls" className={`control-wrapper ${drawer_open_class} ${switcher_class}`}>
           <div className="buttons">
             <Button 
-                color="primary" 
+                // TODO: allow configurable button colors. see: https://react.semantic-ui.com/elements/button/#variations-colored
+                color="blue" 
+                size="small"
+                circular
                 className="btn-pill toggle toggle-open shadow" 
                 onClick={ ()=>{ props.toggle()} }
                 data-tip
@@ -548,7 +549,7 @@ class Dock extends Component {
                 // data-event='click' 
                 // data-event-off='dblclick'
             >
-              <i className="fa fa-mobile fa-lg"></i>
+              <Icon name="mobile alternate" />
               {props.text}
             </Button>
             { (props.switcher) ? (
@@ -640,7 +641,6 @@ class Dock extends Component {
             { (this.state.show.zoom) ? (
             <ZoomMenu 
                 text={this.props.zoom}
-                direction="down"
                 onChoice={(to)=>this.setZoom(to)}
                 getSelected={(type,value)=>{ return this.selected(type,value) }}
             />
@@ -672,7 +672,6 @@ class Dock extends Component {
             { (this.state.show.zoom) ? (
             <ZoomMenu 
                 text={this.props.zoom}
-                direction="up"
                 onChoice={(to)=>this.setZoom(to)}
                 getSelected={(type,value)=>{ return this.selected(type,value) }}
             />

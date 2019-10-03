@@ -26,15 +26,16 @@ const DEFAULTS = {
 // Map zoom text keys to zoom levels. Zoom text keys are used 
 // to map props to viewable text, Zoom Levels provide the numeric
 // levels that each text key sets into the dom when a zoom level changes
-const ZOOM_MAP = {
+const ZOOMABLE = {
   'full': '100',
   'large': '90',
   'med': '80',
   'small': '70',
 }
-// flip the zoom_map and merge the results back into the zoom_map
+
+// flip the zoom_levels and merge the results back into the zoom_map
 // so we can access a level from a label and a label from a level
-_.set(ZOOM_MAP,_.merge(ZOOM_MAP,_.invert(ZOOM_MAP)));
+const ZOOM_MAP = _.merge(_.clone(ZOOMABLE),_.invert(ZOOMABLE));
 
 // the numeric levels that each text key sets into the dom when a zoom level changes
 const ZOOM_LEVELS = [
@@ -48,5 +49,6 @@ export {
   CLASSES,
   DEFAULTS,
   ZOOM_MAP,
-  ZOOM_LEVELS
+  ZOOM_LEVELS,
+  ZOOMABLE,
 }
