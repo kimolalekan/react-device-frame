@@ -422,6 +422,7 @@ class Dock extends Component {
             compact
             pointing
             floating
+            closeOnBlur={true}
             trigger={trigger}
             className="zoom-menu"
         >
@@ -453,7 +454,8 @@ class Dock extends Component {
         <Dropdown 
             icon="setting" 
             text="Choose Device" 
-            pointing="right" 
+            pointing="right"
+            closeOnBlur={true}
             className="device-menu shadow"
         >
           <Dropdown.Menu>
