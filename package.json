@@ -1,8 +1,8 @@
 {
   "name": "react-device-frame",
-  "version": "2.1.4",
+  "version": "2.2.1",
   "description": "Preview website on a device frame",
-  "main": "react-device-frame.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "babel src -d build",
     "lint": "eslint src/** --fix ; exit 0",
@@ -11,14 +11,14 @@
   "keywords": "react, device, frame, browser, preview, component",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kimolalekan/react-device-frame.git"
+    "url": "git+https://github.com/perfectcube/react-device-frame.git"
   },
-  "author": "Olalekan Animashaun <kim.olalekan@gmail.com> (https://kimolalekan.github.io/)",
+  "author": "Olalekan Animashaun <kim.olalekan@gmail.com> (https://kimolalekan.github.io/), Dan Bryant <dan@perfectcu.be>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kimolalekan/react-device-frame/issues"
+    "url": "https://github.com/perfectcube/react-device-frame/issues"
   },
-  "homepage": "https://github.com/kimolalekan/react-device-frame#readme",
+  "homepage": "https://github.com/perfectcube/react-device-frame#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -34,5 +34,14 @@
     "prop-types": "^15.6.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
+  },
+  "dependencies": {
+    "Devices.css": "https://github.com/perfectcube/devices.css",
+    "lodash": "^4.17.15",
+    "react-color": "^2.17.3",
+    "react-drag-drawer": "^3.3.1",
+    "react-tooltip": "^3.11.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.1"
   }
 }

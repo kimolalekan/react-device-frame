@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import "./devices.css";
+import Content from './lib/Content';
+import Props from './lib/Props';
 
 export default class Iphonex extends Component {
-  render() {
-    let color;
-    this.props.color ? (color = this.props.color) : (color = "gold");
-
+  
+  render(){
     return (
       <div className={`marvel-device iphone-x ${this.props.orientation}`}>
         <div className="notch">
@@ -25,15 +23,12 @@ export default class Iphonex extends Component {
         </div>
         <div className="inner-shadow" />
         <div className="screen">
-          <iframe src={this.props.site} />
+          <Content show={this.props.show} />
         </div>
       </div>
-    );
+    );  
   }
+
 }
 
-Iphonex.propTypes = {
-  color: PropTypes.string,
-  site: PropTypes.string,
-  orientation: PropTypes.string
-};
+Iphonex.propTypes = Props;
